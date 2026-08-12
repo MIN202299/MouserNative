@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+
+# Xcode user data and build products
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# Local tool build products and compiled probes
+tools/build/
+tools/btnmon
+tools/keytest
+tools/keytest2
+tools/keytest3
+tools/keytest4
+tools/keytest5
+tools/keytest6
+tools/pingtest
+tools/probe
+tools/slstest
+
+# Editor-local settings
+.idea/
+.vscode/
+*.swp
+

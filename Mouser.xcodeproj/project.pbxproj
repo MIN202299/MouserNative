@@ -1,0 +1,408 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B00000000000000000000001 /* MouserApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000001 /* MouserApp.swift */; };
+		B00000000000000000000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000002 /* AppDelegate.swift */; };
+		B00000000000000000000003 /* AppActivationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000003 /* AppActivationPolicy.swift */; };
+		B00000000000000000000004 /* HIDPPConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000004 /* HIDPPConstants.swift */; };
+		B00000000000000000000005 /* HIDTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000005 /* HIDTransport.swift */; };
+		B00000000000000000000006 /* HIDPPSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000006 /* HIDPPSession.swift */; };
+		B00000000000000000000007 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000007 /* DeviceManager.swift */; };
+		B00000000000000000000008 /* DeviceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000008 /* DeviceState.swift */; };
+		B00000000000000000000009 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000009 /* Action.swift */; };
+		B00000000000000000000010 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000010 /* ConfigStore.swift */; };
+		B00000000000000000000011 /* ButtonInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000011 /* ButtonInterceptor.swift */; };
+		B00000000000000000000012 /* ActionPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000012 /* ActionPerformer.swift */; };
+		B00000000000000000000013 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000013 /* PermissionManager.swift */; };
+		B00000000000000000000014 /* RuntimeServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000014 /* RuntimeServices.swift */; };
+		B00000000000000000000015 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000015 /* SettingsWindowController.swift */; };
+		B00000000000000000000016 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000016 /* SettingsView.swift */; };
+		B00000000000000000000017 /* ButtonsPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000017 /* ButtonsPane.swift */; };
+		B00000000000000000000018 /* PointerScrollPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000018 /* PointerScrollPane.swift */; };
+		B00000000000000000000019 /* BatteryPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000019 /* BatteryPane.swift */; };
+		B00000000000000000000020 /* GeneralPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000020 /* GeneralPane.swift */; };
+		B00000000000000000000021 /* MenuBarContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000021 /* MenuBarContentView.swift */; };
+		B00000000000000000000024 /* SystemActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000024 /* SystemActions.swift */; };
+		B00000000000000000000022 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000022 /* Localizable.xcstrings */; };
+		B00000000000000000000023 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000023 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F00000000000000000000001 /* MouserApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouserApp.swift; sourceTree = "<group>"; };
+		F00000000000000000000002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F00000000000000000000003 /* AppActivationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppActivationPolicy.swift; sourceTree = "<group>"; };
+		F00000000000000000000004 /* HIDPPConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPPConstants.swift; sourceTree = "<group>"; };
+		F00000000000000000000005 /* HIDTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDTransport.swift; sourceTree = "<group>"; };
+		F00000000000000000000006 /* HIDPPSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPPSession.swift; sourceTree = "<group>"; };
+		F00000000000000000000007 /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
+		F00000000000000000000008 /* DeviceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceState.swift; sourceTree = "<group>"; };
+		F00000000000000000000009 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		F00000000000000000000010 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
+		F00000000000000000000011 /* ButtonInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonInterceptor.swift; sourceTree = "<group>"; };
+		F00000000000000000000012 /* ActionPerformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionPerformer.swift; sourceTree = "<group>"; };
+		F00000000000000000000013 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		F00000000000000000000014 /* RuntimeServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeServices.swift; sourceTree = "<group>"; };
+		F00000000000000000000015 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
+		F00000000000000000000016 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		F00000000000000000000017 /* ButtonsPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsPane.swift; sourceTree = "<group>"; };
+		F00000000000000000000018 /* PointerScrollPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerScrollPane.swift; sourceTree = "<group>"; };
+		F00000000000000000000019 /* BatteryPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryPane.swift; sourceTree = "<group>"; };
+		F00000000000000000000020 /* GeneralPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPane.swift; sourceTree = "<group>"; };
+		F00000000000000000000021 /* MenuBarContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContentView.swift; sourceTree = "<group>"; };
+		F00000000000000000000024 /* SystemActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemActions.swift; sourceTree = "<group>"; };
+		F00000000000000000000022 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		F00000000000000000000023 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		R00000000000000000000001 /* Mouser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mouser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		S00000000000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		G00000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				G00000000000000000000003 /* Mouser */,
+				G00000000000000000000002 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		G00000000000000000000002 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				R00000000000000000000001 /* Mouser.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000003 /* Mouser */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000001 /* MouserApp.swift */,
+				F00000000000000000000002 /* AppDelegate.swift */,
+				F00000000000000000000003 /* AppActivationPolicy.swift */,
+				G00000000000000000000004 /* HIDPP */,
+				G00000000000000000000005 /* Model */,
+				G00000000000000000000006 /* Engine */,
+				G00000000000000000000007 /* Runtime */,
+				G00000000000000000000008 /* UI */,
+				F00000000000000000000022 /* Localizable.xcstrings */,
+				F00000000000000000000023 /* Assets.xcassets */,
+			);
+			path = Mouser;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000004 /* HIDPP */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000004 /* HIDPPConstants.swift */,
+				F00000000000000000000005 /* HIDTransport.swift */,
+				F00000000000000000000006 /* HIDPPSession.swift */,
+				F00000000000000000000007 /* DeviceManager.swift */,
+			);
+			path = HIDPP;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000005 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000008 /* DeviceState.swift */,
+				F00000000000000000000009 /* Action.swift */,
+				F00000000000000000000010 /* ConfigStore.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000006 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000011 /* ButtonInterceptor.swift */,
+				F00000000000000000000012 /* ActionPerformer.swift */,
+				F00000000000000000000024 /* SystemActions.swift */,
+				F00000000000000000000013 /* PermissionManager.swift */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000007 /* Runtime */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000014 /* RuntimeServices.swift */,
+			);
+			path = Runtime;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000008 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000015 /* SettingsWindowController.swift */,
+				F00000000000000000000016 /* SettingsView.swift */,
+				F00000000000000000000021 /* MenuBarContentView.swift */,
+				G00000000000000000000009 /* Panes */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000009 /* Panes */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000017 /* ButtonsPane.swift */,
+				F00000000000000000000018 /* PointerScrollPane.swift */,
+				F00000000000000000000019 /* BatteryPane.swift */,
+				F00000000000000000000020 /* GeneralPane.swift */,
+			);
+			path = Panes;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		T00000000000000000000001 /* Mouser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = L00000000000000000000002 /* Build configuration list for PBXNativeTarget "Mouser" */;
+			buildPhases = (
+				S00000000000000000000001 /* Sources */,
+				S00000000000000000000002 /* Frameworks */,
+				S00000000000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Mouser;
+			productName = Mouser;
+			productReference = R00000000000000000000001 /* Mouser.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		P00000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					T00000000000000000000001 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+				};
+			};
+			buildConfigurationList = L00000000000000000000001 /* Build configuration list for PBXProject "Mouser" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+			);
+			mainGroup = G00000000000000000000001;
+			productRefGroup = G00000000000000000000002 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				T00000000000000000000001 /* Mouser */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		S00000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B00000000000000000000022 /* Localizable.xcstrings in Resources */,
+				B00000000000000000000023 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		S00000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B00000000000000000000001 /* MouserApp.swift in Sources */,
+				B00000000000000000000002 /* AppDelegate.swift in Sources */,
+				B00000000000000000000003 /* AppActivationPolicy.swift in Sources */,
+				B00000000000000000000004 /* HIDPPConstants.swift in Sources */,
+				B00000000000000000000005 /* HIDTransport.swift in Sources */,
+				B00000000000000000000006 /* HIDPPSession.swift in Sources */,
+				B00000000000000000000007 /* DeviceManager.swift in Sources */,
+				B00000000000000000000008 /* DeviceState.swift in Sources */,
+				B00000000000000000000009 /* Action.swift in Sources */,
+				B00000000000000000000010 /* ConfigStore.swift in Sources */,
+				B00000000000000000000011 /* ButtonInterceptor.swift in Sources */,
+				B00000000000000000000012 /* ActionPerformer.swift in Sources */,
+				B00000000000000000000013 /* PermissionManager.swift in Sources */,
+				B00000000000000000000014 /* RuntimeServices.swift in Sources */,
+				B00000000000000000000015 /* SettingsWindowController.swift in Sources */,
+				B00000000000000000000016 /* SettingsView.swift in Sources */,
+				B00000000000000000000017 /* ButtonsPane.swift in Sources */,
+				B00000000000000000000018 /* PointerScrollPane.swift in Sources */,
+				B00000000000000000000019 /* BatteryPane.swift in Sources */,
+				B00000000000000000000020 /* GeneralPane.swift in Sources */,
+				B00000000000000000000021 /* MenuBarContentView.swift in Sources */,
+				B00000000000000000000024 /* SystemActions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C00000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		C00000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		C00000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YWY376987U;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Mouser;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-F$(SDKROOT)/System/Library/PrivateFrameworks",
+					"-framework",
+					SkyLight,
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.duan.mouser;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		C00000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YWY376987U;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Mouser;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-F$(SDKROOT)/System/Library/PrivateFrameworks",
+					"-framework",
+					SkyLight,
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.duan.mouser;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		L00000000000000000000001 /* Build configuration list for PBXProject "Mouser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C00000000000000000000001 /* Debug */,
+				C00000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		L00000000000000000000002 /* Build configuration list for PBXNativeTarget "Mouser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C00000000000000000000003 /* Debug */,
+				C00000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = P00000000000000000000001 /* Project object */;
+}

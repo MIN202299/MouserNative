@@ -1,0 +1,587 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ is running and will fight Mouser for device access. Quit it to avoid conflicts." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "%@ 正在运行，会与 Mouser 争夺设备访问权。请退出它以避免冲突。" }
+        }
+      }
+    },
+    "A lightweight, fully local Logitech mouse remapper. No telemetry, no cloud, no Logitech account." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "轻量、完全本地的罗技鼠标按键映射工具。无遥测、无云端、无需罗技账号。" }
+        }
+      }
+    },
+    "About" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "关于" }
+        }
+      }
+    },
+    "Accessibility" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "辅助功能" }
+        }
+      }
+    },
+    "App Exposé" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "App Exposé" }
+        }
+      }
+    },
+    "Automatically switch between ratchet and free-spin scrolling." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "在棘轮模式和自由滚动模式之间自动切换。" }
+        }
+      }
+    },
+    "Back" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "后退" }
+        }
+      }
+    },
+    "Back Button" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "后退键" }
+        }
+      }
+    },
+    "Battery" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "电量" }
+        }
+      }
+    },
+    "Battery: %d%%" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "电量：%d%%" }
+        }
+      }
+    },
+    "Battery: %d%% (charging)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "电量：%d%%（充电中）" }
+        }
+      }
+    },
+    "Browser" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "浏览器" }
+        }
+      }
+    },
+    "Browser Back" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "浏览器后退" }
+        }
+      }
+    },
+    "Browser Forward" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "浏览器前进" }
+        }
+      }
+    },
+    "Button Assignments" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "按键分配" }
+        }
+      }
+    },
+    "Buttons" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "按键" }
+        }
+      }
+    },
+    "Charging" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "充电中" }
+        }
+      }
+    },
+    "Close Tab" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "关闭标签页" }
+        }
+      }
+    },
+    "Connected" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "已连接" }
+        }
+      }
+    },
+    "Copy" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "拷贝" }
+        }
+      }
+    },
+    "Cut" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "剪切" }
+        }
+      }
+    },
+    "Default" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "默认" }
+        }
+      }
+    },
+    "Desktop Left" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "左侧桌面" }
+        }
+      }
+    },
+    "Desktop Right" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "右侧桌面" }
+        }
+      }
+    },
+    "Discharging" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "使用中" }
+        }
+      }
+    },
+    "Display the charge level next to the menu bar icon." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "在菜单栏图标旁显示电量百分比。" }
+        }
+      }
+    },
+    "Do Nothing" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "无操作" }
+        }
+      }
+    },
+    "DPI" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "DPI" }
+        }
+      }
+    },
+    "Editing" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "编辑" }
+        }
+      }
+    },
+    "Find" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "查找" }
+        }
+      }
+    },
+    "Forward" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "前进" }
+        }
+      }
+    },
+    "Forward Button" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "前进键" }
+        }
+      }
+    },
+    "General" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "通用" }
+        }
+      }
+    },
+    "Granted" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "已授权" }
+        }
+      }
+    },
+    "Invert scroll direction" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "反转滚动方向" }
+        }
+      }
+    },
+    "Launch at Login" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "登录时启动" }
+        }
+      }
+    },
+    "Launchpad" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "启动台" }
+        }
+      }
+    },
+    "Left Click" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "左键单击" }
+        }
+      }
+    },
+    "Logitech software detected" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "检测到罗技软件" }
+        }
+      }
+    },
+    "Login item update failed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "登录项更新失败" }
+        }
+      }
+    },
+    "Media" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "媒体" }
+        }
+      }
+    },
+    "Middle Button" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "中键" }
+        }
+      }
+    },
+    "Middle Click" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "中键单击" }
+        }
+      }
+    },
+    "Mission Control" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "调度中心" }
+        }
+      }
+    },
+    "Mode Shift Button" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "模式切换键" }
+        }
+      }
+    },
+    "Mouse" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "鼠标" }
+        }
+      }
+    },
+    "Mouser Settings" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "Mouser 设置" }
+        }
+      }
+    },
+    "Mute" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "静音" }
+        }
+      }
+    },
+    "New Tab" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "新建标签页" }
+        }
+      }
+    },
+    "Next Tab" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "下一个标签页" }
+        }
+      }
+    },
+    "Next Track" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "下一首" }
+        }
+      }
+    },
+    "No mouse connected" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "未连接鼠标" }
+        }
+      }
+    },
+    "Not granted" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "未授权" }
+        }
+      }
+    },
+    "Notify on action failure" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "操作失败时通知" }
+        }
+      }
+    },
+    "Open Settings…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "打开设置…" }
+        }
+      }
+    },
+    "Paste" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "粘贴" }
+        }
+      }
+    },
+    "Play / Pause" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "播放/暂停" }
+        }
+      }
+    },
+    "Pointer" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "指针" }
+        }
+      }
+    },
+    "Pointer & Scroll" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "指针与滚动" }
+        }
+      }
+    },
+    "Previous Tab" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "上一个标签页" }
+        }
+      }
+    },
+    "Previous Track" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "上一首" }
+        }
+      }
+    },
+    "Quit Mouser" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "退出 Mouser" }
+        }
+      }
+    },
+    "Refresh" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "刷新" }
+        }
+      }
+    },
+    "Right Click" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "右键单击" }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "存储" }
+        }
+      }
+    },
+    "Screenshot" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "截屏" }
+        }
+      }
+    },
+    "Could not open the system component." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "无法打开系统组件。" }
+        }
+      }
+    },
+    "App Exposé is unavailable right now." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "App Exposé 当前不可用。" }
+        }
+      }
+    },
+    "Scroll Wheel" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "滚轮" }
+        }
+      }
+    },
+    "Select All" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "全选" }
+        }
+      }
+    },
+    "Sensitivity" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "灵敏度" }
+        }
+      }
+    },
+    "Settings…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "设置…" }
+        }
+      }
+    },
+    "Show a system notification when a remapped action fails." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "当映射操作执行失败时显示系统通知。" }
+        }
+      }
+    },
+    "Show battery percentage in menu bar" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "在菜单栏显示电量百分比" }
+        }
+      }
+    },
+    "Spotlight" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "聚焦" }
+        }
+      }
+    },
+    "Mappings are applied on the device via HID++ and stay active while Mouser runs. Power cycling the mouse restores defaults." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "按键映射通过 HID++ 直接写入设备，在 Mouser 运行期间生效；重启鼠标电源即可恢复默认。" }
+        }
+      }
+    },
+    "Start Mouser automatically when you sign in." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "登录时自动启动 Mouser。" }
+        }
+      }
+    },
+    "System" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "系统" }
+        }
+      }
+    },
+    "Undo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "撤销" }
+        }
+      }
+    },
+    "Volume Down" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "降低音量" }
+        }
+      }
+    },
+    "Volume Up" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "提高音量" }
+        }
+      }
+    },
+    "Waiting for device…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "等待设备…" }
+        }
+      }
+    },
+    "Written to the device firmware (read-modify-write, hi-res bit preserved)." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "写入设备固件（读-改-写，保留高分辨率位）。" }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
