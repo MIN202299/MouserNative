@@ -28,7 +28,7 @@
 
 ## 环境要求
 
-- macOS 14.0+(针对 macOS 26 适配），Apple Silicon
+- macOS 14.0+(针对 macOS 26 适配）；Release 安装包是 arm64 + x86_64 通用二进制，日常在 Apple Silicon 上验证
 - 辅助功能权限（用于 CGEventTap 兜底路径）
 - 鼠标通过蓝牙（BLE）连接
 
