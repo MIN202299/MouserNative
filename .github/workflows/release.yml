@@ -1,0 +1,80 @@
+name: Release
+
+# 打 tag（v1.0.2）时自动构建安装包并发布到 GitHub Release，
+# 也可以在 Actions 页面手动触发（workflow_dispatch）。
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "发布 tag，例如 v1.0.3。留空则使用工程里的 MARKETING_VERSION"
+        required: false
+        type: string
+      draft:
+        description: "创建为草稿 Release（不公开）"
+        required: false
+        type: boolean
+        default: false
+
+# 创建 Release 并上传安装包需要写权限
+permissions:
+  contents: write
+
+# 同一个 tag 的发布不并发执行，避免两个 job 同时改 Release
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: 构建安装包并发布
+    # 工程用到 macOS 26 的 API（scrollEdgeEffectStyle），需要 Xcode 26 的 SDK
+    runs-on: macos-26
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 工具链信息
+        run: |
+          xcodebuild -version
+          sw_vers
+          uname -m
+
+      - name: 构建并打包（DMG + ZIP）
+        id: package
+        run: ./script/package_release.sh
+
+      - name: 解析发布 tag
+        id: meta
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            TAG="${GITHUB_REF_NAME}"
+          elif [[ -n "${INPUT_TAG}" ]]; then
+            TAG="${INPUT_TAG}"
+          else
+            TAG="v${{ steps.package.outputs.version }}"
+          fi
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "发布 tag：${TAG}"
+
+      - name: 上传产物到 Actions artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mouser-${{ steps.package.outputs.version }}
+          path: |
+            dist/Mouser-*.dmg
+            dist/Mouser-*.zip
+          if-no-files-found: error
+
+      - name: 创建 / 更新 GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ./script/publish_release.sh "${{ steps.meta.outputs.tag }}" ${{ inputs.draft && '--draft' || '' }}

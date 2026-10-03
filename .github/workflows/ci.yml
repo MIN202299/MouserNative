@@ -1,0 +1,36 @@
+name: CI
+
+# 每次推送到 main 或提 PR 时做一次编译检查，避免把编译不过的代码合进去。
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: 编译检查（Debug）
+    # 工程用到 macOS 26 的 API（scrollEdgeEffectStyle），需要 Xcode 26 的 SDK
+    runs-on: macos-26
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 工具链信息
+        run: |
+          xcodebuild -version
+          sw_vers
+
+      - name: xcodebuild
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project Mouser.xcodeproj \
+            -scheme Mouser \
+            -configuration Debug \
+            -destination 'generic/platform=macOS' \
+            CODE_SIGNING_ALLOWED=NO \
+            build 2>&1 | tail -200

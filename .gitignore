@@ -30,3 +30,9 @@ tools/slstest
 .vscode/
 *.swp
 
+# 发布打包产物（DMG / ZIP / 发布说明）
+dist/
+
+# Codex 本地环境配置（自动生成）
+.codex/
+

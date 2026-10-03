@@ -4,6 +4,20 @@
 
 目标设备：Logitech MX Anywhere 3S(PID `0xB037`,Vendor `0x046D`,BLE 连接）。
 
+## 下载安装
+
+最新安装包见 [Releases](https://github.com/MIN202299/MouserNative/releases/latest)：
+
+- `Mouser-<版本>.dmg` —— 推荐。打开后把 **Mouser** 拖进「应用程序」
+- `Mouser-<版本>.zip` —— 备用。解压后把 `Mouser.app` 拖进「应用程序」
+
+安装包为 ad-hoc 临时签名、**未做 Apple 公证**，首次打开会被 Gatekeeper 拦下，任选一种方式放行：
+
+- 在「应用程序」里右键（或按住 Control 点击）Mouser → 「打开」→ 弹窗里再点一次「打开」；
+- 或执行一次：`xattr -dr com.apple.quarantine /Applications/Mouser.app`
+
+首次运行按引导授权「辅助功能」与「输入监控」权限，鼠标需已通过蓝牙配对。
+
 ## 功能
 
 - **按键重映射**：中键 / 后退 / 前进 / Mode Shift 四个按键可映射为 30+ 种动作（鼠标点击、编辑快捷键、浏览器操作、系统功能、媒体控制），通过 HID++ 固件级 divert 实现，与 Logi Options+ 共存也不冲突
@@ -25,6 +39,24 @@ xcodebuild -project Mouser.xcodeproj -scheme Mouser -configuration Debug build
 ```
 
 签名使用 Automatic / Apple Development。链接了私有框架 SkyLight(`-F .../PrivateFrameworks -framework SkyLight`)。
+
+## 发布新版本
+
+推送 `v*` tag 会触发 [Release workflow](.github/workflows/release.yml)：在 macOS runner 上构建通用二进制、ad-hoc 临时签名、打成 DMG + ZIP，并自动创建对应的 GitHub Release（安装包直接挂在 Release 上供下载）。
+
+```bash
+git tag v1.0.3
+git push origin v1.0.3
+```
+
+本地也可以手动打包和发布：
+
+```bash
+./script/package_release.sh           # 构建 + 打包到 dist/（DMG、ZIP、发布说明）
+./script/publish_release.sh v1.0.3    # 把 dist/ 里的安装包发到 GitHub Release
+```
+
+也可以在仓库 Actions 页面手动触发 `Release` workflow（可指定 tag，或先创建草稿 Release）。
 
 ---
 
