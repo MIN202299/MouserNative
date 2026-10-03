@@ -17,10 +17,14 @@
 		B00000000000000000000008 /* DeviceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000008 /* DeviceState.swift */; };
 		B00000000000000000000009 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000009 /* Action.swift */; };
 		B00000000000000000000010 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000010 /* ConfigStore.swift */; };
+		B00000000000000000000025 /* DPISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000025 /* DPISettings.swift */; };
+		B00000000000000000000028 /* AppVersionFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000028 /* AppVersionFormatter.swift */; };
 		B00000000000000000000011 /* ButtonInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000011 /* ButtonInterceptor.swift */; };
 		B00000000000000000000012 /* ActionPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000012 /* ActionPerformer.swift */; };
 		B00000000000000000000013 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000013 /* PermissionManager.swift */; };
+		B00000000000000000000027 /* InputMonitoringPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000027 /* InputMonitoringPermission.swift */; };
 		B00000000000000000000014 /* RuntimeServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000014 /* RuntimeServices.swift */; };
+		B00000000000000000000026 /* PowerLifecycleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000026 /* PowerLifecycleCoordinator.swift */; };
 		B00000000000000000000015 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000015 /* SettingsWindowController.swift */; };
 		B00000000000000000000016 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000016 /* SettingsView.swift */; };
 		B00000000000000000000017 /* ButtonsPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000017 /* ButtonsPane.swift */; };
@@ -44,10 +48,14 @@
 		F00000000000000000000008 /* DeviceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceState.swift; sourceTree = "<group>"; };
 		F00000000000000000000009 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		F00000000000000000000010 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
+		F00000000000000000000025 /* DPISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPISettings.swift; sourceTree = "<group>"; };
+		F00000000000000000000028 /* AppVersionFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionFormatter.swift; sourceTree = "<group>"; };
 		F00000000000000000000011 /* ButtonInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonInterceptor.swift; sourceTree = "<group>"; };
 		F00000000000000000000012 /* ActionPerformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionPerformer.swift; sourceTree = "<group>"; };
 		F00000000000000000000013 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		F00000000000000000000027 /* InputMonitoringPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputMonitoringPermission.swift; sourceTree = "<group>"; };
 		F00000000000000000000014 /* RuntimeServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeServices.swift; sourceTree = "<group>"; };
+		F00000000000000000000026 /* PowerLifecycleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerLifecycleCoordinator.swift; sourceTree = "<group>"; };
 		F00000000000000000000015 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		F00000000000000000000016 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F00000000000000000000017 /* ButtonsPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsPane.swift; sourceTree = "<group>"; };
@@ -122,6 +130,8 @@
 				F00000000000000000000008 /* DeviceState.swift */,
 				F00000000000000000000009 /* Action.swift */,
 				F00000000000000000000010 /* ConfigStore.swift */,
+				F00000000000000000000025 /* DPISettings.swift */,
+				F00000000000000000000028 /* AppVersionFormatter.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -133,6 +143,7 @@
 				F00000000000000000000012 /* ActionPerformer.swift */,
 				F00000000000000000000024 /* SystemActions.swift */,
 				F00000000000000000000013 /* PermissionManager.swift */,
+				F00000000000000000000027 /* InputMonitoringPermission.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -141,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				F00000000000000000000014 /* RuntimeServices.swift */,
+				F00000000000000000000026 /* PowerLifecycleCoordinator.swift */,
 			);
 			path = Runtime;
 			sourceTree = "<group>";
@@ -248,10 +260,14 @@
 				B00000000000000000000008 /* DeviceState.swift in Sources */,
 				B00000000000000000000009 /* Action.swift in Sources */,
 				B00000000000000000000010 /* ConfigStore.swift in Sources */,
+				B00000000000000000000025 /* DPISettings.swift in Sources */,
+				B00000000000000000000028 /* AppVersionFormatter.swift in Sources */,
 				B00000000000000000000011 /* ButtonInterceptor.swift in Sources */,
 				B00000000000000000000012 /* ActionPerformer.swift in Sources */,
 				B00000000000000000000013 /* PermissionManager.swift in Sources */,
+				B00000000000000000000027 /* InputMonitoringPermission.swift in Sources */,
 				B00000000000000000000014 /* RuntimeServices.swift in Sources */,
+				B00000000000000000000026 /* PowerLifecycleCoordinator.swift in Sources */,
 				B00000000000000000000015 /* SettingsWindowController.swift in Sources */,
 				B00000000000000000000016 /* SettingsView.swift in Sources */,
 				B00000000000000000000017 /* ButtonsPane.swift in Sources */,
@@ -274,7 +290,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -305,7 +321,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -328,7 +344,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = YWY376987U;
 				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -344,7 +360,7 @@
 					"-framework",
 					SkyLight,
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.duan.mouser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -358,7 +374,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = YWY376987U;
 				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -374,7 +390,7 @@
 					"-framework",
 					SkyLight,
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.duan.mouser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

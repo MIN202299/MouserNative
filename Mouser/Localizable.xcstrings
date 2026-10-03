@@ -239,6 +239,20 @@
         }
       }
     },
+    "Input Monitoring" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "输入监控" }
+        }
+      }
+    },
+    "Input Monitoring permission required" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "需要输入监控权限" }
+        }
+      }
+    },
     "Invert scroll direction" : {
       "localizations" : {
         "zh-Hans" : {

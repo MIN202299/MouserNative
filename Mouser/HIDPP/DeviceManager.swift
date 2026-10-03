@@ -25,13 +25,16 @@ final class DeviceManager {
     private var attemptedDevices = Set<ObjectIdentifier>()
     private var connecting = false
     private var scanning = false
+    private var isSuspended = false
+    private var retryTask: Task<Void, Never>?
+    private var wakeTask: Task<Void, Never>?
 
     private init() {}
 
     // MARK: - Lifecycle
 
     func start() {
-        guard !scanning else { return }
+        guard !isSuspended, !scanning else { return }
         scanning = true
         let manager = IOHIDManagerCreate(kCFAllocatorDefault, IOOptionBits(kIOHIDOptionsTypeNone))
         IOHIDManagerSetDeviceMatching(manager, [kIOHIDVendorIDKey: HIDPP.vendorID] as CFDictionary)
@@ -48,7 +51,7 @@ final class DeviceManager {
     }
 
     func scan() {
-        guard handle == nil else { return }
+        guard !isSuspended, handle == nil else { return }
         let devices = HIDDiscovery.matchingDevices()
         print("[Mouser] Scan: \(devices.count) Logitech device(s) found")
         if devices.isEmpty {
@@ -64,12 +67,12 @@ final class DeviceManager {
     }
 
     private func deviceAppeared(_ device: IOHIDDevice) {
-        guard handle == nil else { return }
+        guard !isSuspended, handle == nil else { return }
         attemptConnection(to: device)
     }
 
     private func attemptConnection(to device: IOHIDDevice) {
-        guard !connecting, handle == nil else { return }
+        guard !isSuspended, !connecting, handle == nil else { return }
         let deviceID = ObjectIdentifier(device)
         guard !attemptedDevices.contains(deviceID) else { return }
         attemptedDevices.insert(deviceID)
@@ -111,9 +114,12 @@ final class DeviceManager {
     }
 
     private func scheduleRetryScan() {
-        Task { @MainActor in
+        guard !isSuspended else { return }
+        retryTask?.cancel()
+        retryTask = Task { @MainActor in
             try? await Task.sleep(nanoseconds: 3_000_000_000)
-            guard self.handle == nil, !self.connecting else { return }
+            guard !Task.isCancelled, !self.isSuspended,
+                  self.handle == nil, !self.connecting else { return }
             self.scan()
         }
     }
@@ -123,7 +129,10 @@ final class DeviceManager {
         let handle = candidate
         let session = newSession
         guard await session.ping() else { return false }
-        guard self.handle == nil else { return false }
+        guard !isSuspended, self.handle == nil else {
+            await session.close()
+            return false
+        }
         self.handle = handle
         self.session = session
 
@@ -155,6 +164,7 @@ final class DeviceManager {
         print("[Mouser] Features: reprog=\(reprogIndex.map(String.init) ?? "-") dpi=\(dpiIndex.map(String.init) ?? "-") battery=\(batteryIndex.map(String.init) ?? "-") smartShift=\(smartShiftIndex.map(String.init) ?? "-") wheel=\(wheelIndex.map(String.init) ?? "-")")
 
         await refreshAll()
+        await restorePreferredDPI()
         await applyButtonConfiguration()
         await setWheelInvertVertical(ConfigStore.shared.invertScrollVertical)
 
@@ -163,6 +173,63 @@ final class DeviceManager {
             Task { @MainActor in await self?.refreshBattery() }
         }
         return true
+    }
+
+    /// Quiesces all Logitech HID traffic before macOS enters sleep. Button
+    /// diversion remains stored in the mouse firmware and is restored on wake.
+    func suspendForSleep() {
+        guard !isSuspended else { return }
+        isSuspended = true
+        wakeTask?.cancel()
+        wakeTask = nil
+        retryTask?.cancel()
+        retryTask = nil
+        batteryTimer?.invalidate()
+        batteryTimer = nil
+
+        let oldSession = session
+        session = nil
+        handle?.onReport = nil
+        handle?.onRemoved = nil
+        handle?.close()
+        handle = nil
+        connecting = false
+        attemptedDevices = []
+        heldButtons = []
+
+        if let manager = hidManager {
+            IOHIDManagerUnscheduleFromRunLoop(
+                manager,
+                CFRunLoopGetMain(),
+                CFRunLoopMode.defaultMode.rawValue as CFString
+            )
+            IOHIDManagerClose(manager, IOOptionBits(kIOHIDOptionsTypeNone))
+            hidManager = nil
+        }
+        scanning = false
+
+        Task { await oldSession?.close() }
+        DeviceState.shared.connected = false
+        print("[Mouser] Suspended HID session for system sleep")
+    }
+
+    /// Gives Bluetooth and IOHID a moment to settle before rediscovery.
+    func resumeAfterWake(reconnect: Bool = true) {
+        guard isSuspended else { return }
+        isSuspended = false
+        wakeTask?.cancel()
+        guard reconnect else {
+            wakeTask = nil
+            print("[Mouser] HID reconnect deferred until Input Monitoring is granted")
+            return
+        }
+        wakeTask = Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            guard !Task.isCancelled, !self.isSuspended else { return }
+            self.start()
+            self.wakeTask = nil
+        }
+        print("[Mouser] Scheduling HID reconnect after system wake")
     }
 
     private func deviceDisconnected() {
@@ -182,7 +249,9 @@ final class DeviceManager {
         state.batteryCharging = false
         state.dpi = nil
         state.wheelModeByte = nil
-        scheduleRetryScan()
+        if !isSuspended {
+            scheduleRetryScan()
+        }
     }
 
     // MARK: - Reads
@@ -217,6 +286,16 @@ final class DeviceManager {
         print("[Mouser] DPI: \(DeviceState.shared.dpi ?? 0)")
     }
 
+    private func restorePreferredDPI() async {
+        let config = ConfigStore.shared
+        if let preferredDPI = config.preferredDPI {
+            guard DeviceState.shared.dpi != preferredDPI else { return }
+            _ = await setDPI(preferredDPI)
+        } else if let deviceDPI = DeviceState.shared.dpi {
+            config.preferredDPI = deviceDPI
+        }
+    }
+
     func refreshSmartShift() async {
         guard let session, let smartShiftIndex else { return }
         let readFunction: UInt8 = smartShiftEnhanced ? 1 : 0
@@ -246,7 +325,10 @@ final class DeviceManager {
         let clamped = min(max(dpi, DeviceState.dpiRange.lowerBound), DeviceState.dpiRange.upperBound)
         let ok = (try? await session.request(feature: dpiIndex, function: 3,
                                              params: [0x00, UInt8(clamped >> 8), UInt8(clamped & 0xFF)])) != nil
-        if ok { DeviceState.shared.dpi = clamped }
+        if ok {
+            DeviceState.shared.dpi = clamped
+            ConfigStore.shared.preferredDPI = clamped
+        }
         return ok
     }
 
@@ -330,6 +412,7 @@ final class DeviceManager {
     // MARK: - Unsolicited reports
 
     private func handleNotification(_ message: HIDPPMessage) {
+        guard !isSuspended else { return }
         // Battery broadcast: event function 0, software ID != ours.
         if let batteryIndex, message.featureIndex == batteryIndex,
            message.function == 0, message.softwareID != HIDPP.softwareID {

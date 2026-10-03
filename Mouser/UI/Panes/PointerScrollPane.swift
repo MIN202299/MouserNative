@@ -3,6 +3,7 @@ import SwiftUI
 struct PointerScrollPane: View {
     @State private var deviceState = DeviceState.shared
     @State private var config = ConfigStore.shared
+    @State private var dpiInteraction = DPISliderInteraction(initialValue: 1_000)
 
     var body: some View {
         Form {
@@ -10,12 +11,13 @@ struct PointerScrollPane: View {
                 LabeledContent(String(localized: "DPI")) {
                     HStack(spacing: 12) {
                         Slider(
-                            value: dpiBinding,
+                            value: dpiDraftBinding,
                             in: Double(DeviceState.dpiRange.lowerBound)...Double(DeviceState.dpiRange.upperBound),
-                            step: 50
+                            step: 50,
+                            onEditingChanged: handleDPIEditingChanged
                         )
                         .frame(width: 200)
-                        Text("\(deviceState.dpi ?? 0)")
+                        Text("\(dpiInteraction.displayedValue)")
                             .monospacedDigit()
                             .foregroundStyle(.secondary)
                             .frame(width: 48, alignment: .trailing)
@@ -73,15 +75,37 @@ struct PointerScrollPane: View {
         .formStyle(.grouped)
         .scrollContentBackground(.hidden)
         .contentMargins(.top, 8, for: .scrollContent)
+        .onAppear {
+            if let preferredDPI = config.preferredDPI {
+                dpiInteraction.syncFromDevice(preferredDPI)
+            } else if let deviceDPI = deviceState.dpi {
+                dpiInteraction.syncFromDevice(deviceDPI)
+            }
+        }
+        .onChange(of: deviceState.dpi) { _, newValue in
+            if let newValue {
+                dpiInteraction.syncFromDevice(newValue)
+            }
+        }
     }
 
-    private var dpiBinding: Binding<Double> {
+    private var dpiDraftBinding: Binding<Double> {
         Binding(
-            get: { Double(deviceState.dpi ?? 1600) },
+            get: { Double(dpiInteraction.displayedValue) },
             set: { newValue in
-                Task { await DeviceManager.shared.setDPI(Int(newValue)) }
+                dpiInteraction.update(to: newValue)
             }
         )
+    }
+
+    private func handleDPIEditingChanged(_ isEditing: Bool) {
+        guard let dpi = dpiInteraction.setEditing(isEditing) else { return }
+        Task {
+            let succeeded = await DeviceManager.shared.setDPI(dpi)
+            if !succeeded, let deviceDPI = deviceState.dpi {
+                dpiInteraction.syncFromDevice(deviceDPI)
+            }
+        }
     }
 
     private var smartShiftBinding: Binding<Bool> {

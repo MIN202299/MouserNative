@@ -41,8 +41,7 @@ final class SettingsNavigation {
 private enum AppVersion {
     static let displayString: String = {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0"
-        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0"
-        return "v\(version) (\(build))"
+        return AppVersionFormatter.sidebarText(version: version)
     }()
 }
 
@@ -119,6 +118,7 @@ struct SettingsView: View {
 private struct SettingsSidebarView: View {
     @Binding var selectedTab: SettingsTab?
     @State private var deviceState = DeviceState.shared
+    @State private var permissions = PermissionManager.shared
 
     var body: some View {
         List(selection: $selectedTab) {
@@ -129,7 +129,11 @@ private struct SettingsSidebarView: View {
                         .tag(tab)
                 }
             } header: {
-                DeviceHeaderView(connected: deviceState.connected, name: deviceState.deviceName)
+                DeviceHeaderView(
+                    connected: deviceState.connected,
+                    name: deviceState.deviceName,
+                    inputMonitoringGranted: permissions.inputMonitoringGranted
+                )
             }
 
             Text(AppVersion.displayString)
@@ -151,6 +155,7 @@ private struct SettingsSidebarView: View {
 private struct DeviceHeaderView: View {
     let connected: Bool
     let name: String
+    let inputMonitoringGranted: Bool
 
     var body: some View {
         HStack(spacing: 8) {
@@ -163,12 +168,22 @@ private struct DeviceHeaderView: View {
                 Text(connected ? name : String(localized: "No mouse connected"))
                     .font(.headline)
                     .lineLimit(1)
-                Text(connected ? String(localized: "Connected") : String(localized: "Waiting for device…"))
+                Text(statusText)
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(inputMonitoringGranted ? Color.secondary : Color.red)
             }
         }
         .padding(.vertical, 4)
+    }
+
+    private var statusText: String {
+        if connected {
+            return String(localized: "Connected")
+        }
+        if !inputMonitoringGranted {
+            return String(localized: "Input Monitoring permission required")
+        }
+        return String(localized: "Waiting for device…")
     }
 }
 

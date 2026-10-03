@@ -7,6 +7,7 @@ final class ConfigStore {
     static let shared = ConfigStore()
 
     private let defaults = UserDefaults.standard
+    private let dpiStore = DPIValueStore()
     private static let mappingsKey = "buttonMappings"
 
     var buttonMappings: [MouseButton: MouseAction] {
@@ -23,6 +24,15 @@ final class ConfigStore {
 
     var notifyOnActionFailure: Bool {
         didSet { defaults.set(notifyOnActionFailure, forKey: "notifyOnActionFailure") }
+    }
+
+    var preferredDPI: Int? {
+        get { dpiStore.savedValue }
+        set {
+            if let newValue {
+                dpiStore.save(newValue)
+            }
+        }
     }
 
     private init() {

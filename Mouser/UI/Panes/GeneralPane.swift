@@ -55,6 +55,26 @@ struct GeneralPane: View {
                     }
                 }
 
+                LabeledContent(String(localized: "Input Monitoring")) {
+                    HStack(spacing: 8) {
+                        Label(
+                            permissions.inputMonitoringGranted
+                                ? String(localized: "Granted")
+                                : String(localized: "Not granted"),
+                            systemImage: permissions.inputMonitoringGranted ? "checkmark.circle.fill" : "xmark.circle"
+                        )
+                        .foregroundStyle(permissions.inputMonitoringGranted ? .green : .red)
+                        .font(.subheadline)
+
+                        if !permissions.inputMonitoringGranted {
+                            Button(String(localized: "Open Settings…")) {
+                                permissions.requestInputMonitoring()
+                            }
+                            .controlSize(.small)
+                        }
+                    }
+                }
+
                 Toggle(isOn: $config.notifyOnActionFailure) {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(String(localized: "Notify on action failure"))
@@ -109,7 +129,6 @@ struct GeneralPane: View {
 
     private var versionText: String {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
-        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
-        return "Version \(version) (\(build))"
+        return AppVersionFormatter.aboutText(version: version)
     }
 }
