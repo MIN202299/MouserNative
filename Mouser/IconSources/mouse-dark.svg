@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254" role="img" aria-labelledby="title"><title id="title">深色底白色鼠标 · 精细质感版</title>
+<defs>
+ <linearGradient id="tile" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#33353a"/><stop offset=".48" stop-color="#151619"/><stop offset="1" stop-color="#090a0c"/></linearGradient>
+ <linearGradient id="shell" x1=".1" y1="0" x2=".85" y2="1"><stop stop-color="#ffffff"/><stop offset=".48" stop-color="#fafafd"/><stop offset="1" stop-color="#eceef2"/></linearGradient>
+ <radialGradient id="light" cx=".19" cy=".04" r=".95"><stop stop-color="white" stop-opacity="0.42"/><stop offset=".65" stop-color="white" stop-opacity="0"/></radialGradient>
+ <radialGradient id="belly" cx=".53" cy=".92" r=".65"><stop stop-color="white" stop-opacity=".19"/><stop offset="1" stop-color="white" stop-opacity="0"/></radialGradient>
+ <linearGradient id="left" gradientUnits="userSpaceOnUse" x1="420" y1="600" x2="461" y2="600"><stop stop-color="#ced1da" stop-opacity="0.3"/><stop offset=".78" stop-color="#ced1da" stop-opacity="0.34"/><stop offset="1" stop-color="#ced1da" stop-opacity="0.18"/></linearGradient>
+ <linearGradient id="right" gradientUnits="userSpaceOnUse" x1="832" y1="600" x2="791" y2="600"><stop stop-color="#ced1da" stop-opacity="0.3"/><stop offset=".78" stop-color="#ced1da" stop-opacity="0.34"/><stop offset="1" stop-color="#ced1da" stop-opacity="0.18"/></linearGradient>
+ <linearGradient id="rim" x1=".1" y1="0" x2=".8" y2="1"><stop stop-color="white" stop-opacity=".32"/><stop offset=".48" stop-color="white" stop-opacity="0"/><stop offset="1" stop-color="white" stop-opacity=".12"/></linearGradient>
+ <linearGradient id="logo" x2=".4" y2="1"><stop stop-color="#090a0b"/><stop offset="1" stop-color="#151619"/></linearGradient>
+ <filter id="tileShadow" x="-20%" y="-20%" width="140%" height="150%"><feGaussianBlur stdDeviation="14"/></filter>
+ <filter id="contact" x="-20%" y="-20%" width="140%" height="150%"><feGaussianBlur stdDeviation="5"/></filter>
+ <filter id="float" x="-50%" y="-30%" width="200%" height="180%"><feGaussianBlur stdDeviation="24"/></filter>
+ <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="3" seed="17" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".025"/></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"/><feBlend in2="SourceGraphic" mode="soft-light"/></filter>
+ <clipPath id="tileClip"><path d="M420 141 H832 C1005 141 1121 259 1121 430 V836 C1121 1019 1013 1126 832 1126 H420 C238 1126 131 1019 131 836 V430 C131 259 246 141 420 141Z"/></clipPath><clipPath id="bodyClip"><path d="M626 294 C514 294 422 378 422 485 C423 574 420 634 408 732 C386 875 475 985 626 985 C777 985 865 875 843 732 C831 634 828 574 830 485 C830 378 738 294 626 294Z"/></clipPath>
+<linearGradient id="wingFadeGradient" gradientUnits="userSpaceOnUse" x1="0" y1="485" x2="0" y2="912"><stop stop-color="white"/><stop offset=".32" stop-color="white"/><stop offset=".65" stop-color="#777"/><stop offset="1" stop-color="black"/></linearGradient><mask id="wingFade" maskUnits="userSpaceOnUse" x="380" y="470" width="490" height="460"><rect x="380" y="470" width="490" height="460" fill="url(#wingFadeGradient)"/></mask></defs>
+<!-- Tile elevation: broad shadow plus narrow contact shadow -->
+<path d="M420 141 H832 C1005 141 1121 259 1121 430 V836 C1121 1019 1013 1126 832 1126 H420 C238 1126 131 1019 131 836 V430 C131 259 246 141 420 141Z" fill="#20212b" opacity=".26" transform="translate(0 17)" filter="url(#tileShadow)"/>
+<path d="M420 141 H832 C1005 141 1121 259 1121 430 V836 C1121 1019 1013 1126 832 1126 H420 C238 1126 131 1019 131 836 V430 C131 259 246 141 420 141Z" fill="#17181c" opacity=".10" transform="translate(0 5)" filter="url(#contact)"/>
+<path d="M420 141 H832 C1005 141 1121 259 1121 430 V836 C1121 1019 1013 1126 832 1126 H420 C238 1126 131 1019 131 836 V430 C131 259 246 141 420 141Z" fill="url(#tile)"/>
+<path d="M420 141 H832 C1005 141 1121 259 1121 430 V836 C1121 1019 1013 1126 832 1126 H420 C238 1126 131 1019 131 836 V430 C131 259 246 141 420 141Z" fill="none" stroke="url(#rim)" stroke-width="2"/>
+<g clip-path="url(#tileClip)"><path d="M626 294 C514 294 422 378 422 485 C423 574 420 634 408 732 C386 875 475 985 626 985 C777 985 865 875 843 732 C831 634 828 574 830 485 C830 378 738 294 626 294Z" fill="#000000" opacity="0.65" transform="translate(0 27)" filter="url(#float)"/></g>
+<!-- Sculpted shell and the two recessed sidewalls -->
+<path d="M626 294 C514 294 422 378 422 485 C423 574 420 634 408 732 C386 875 475 985 626 985 C777 985 865 875 843 732 C831 634 828 574 830 485 C830 378 738 294 626 294Z" fill="url(#shell)"/>
+<g clip-path="url(#bodyClip)">
+<path d="M422 485 C423 574 420 634 408 732 C397 806 416 866 458 912 C461 851 456 778 453 712 C450 631 441 550 422 485Z" fill="url(#left)" mask="url(#wingFade)"/>
+<path d="M830 485 C829 574 832 634 844 732 C855 806 836 866 794 912 C791 851 796 778 799 712 C802 631 811 550 830 485Z" fill="url(#right)" mask="url(#wingFade)"/>
+<path d="M626 294 C514 294 422 378 422 485 C423 574 420 634 408 732 C386 875 475 985 626 985 C777 985 865 875 843 732 C831 634 828 574 830 485 C830 378 738 294 626 294Z" fill="url(#light)"/>
+<path d="M626 294 C514 294 422 378 422 485 C423 574 420 634 408 732 C386 875 475 985 626 985 C777 985 865 875 843 732 C831 634 828 574 830 485 C830 378 738 294 626 294Z" fill="url(#belly)"/>
+<path d="M626 294 C514 294 422 378 422 485 C423 574 420 634 408 732 C386 875 475 985 626 985 C777 985 865 875 843 732 C831 634 828 574 830 485 C830 378 738 294 626 294Z" fill="transparent"/>
+</g>
+<path d="M626 294 C514 294 422 378 422 485 C423 574 420 634 408 732 C386 875 475 985 626 985 C777 985 865 875 843 732 C831 634 828 574 830 485 C830 378 738 294 626 294Z" fill="none" stroke="url(#rim)" stroke-width="2"/>
+<!-- Button seam and rounded wheel surround -->
+<path d="M626.5 294V386 M626.5 538V622" fill="none" stroke="#101113" stroke-width="7.5" stroke-linecap="round"/>
+<rect x="596.5" y="387" width="60" height="150" rx="30" fill="url(#shell)" stroke="#101113" stroke-width="8"/>
+<rect x="603" y="394" width="47" height="136" rx="23.5" fill="url(#light)" opacity=".55"/>
+<!-- Geometric G mark, drawn as paths -->
+<g transform="translate(0 0)" fill="url(#logo)"><path d="M628 757 A35 35 0 0 0 628 827 V813 A21 21 0 0 1 628 771Z"/><path d="M630 785 H659 Q661 785 661 787 V815 H646 V799 H628 V787 Q628 785 630 785Z"/></g>
+</svg>
