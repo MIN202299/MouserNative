@@ -21,12 +21,8 @@ final class PermissionManager {
     func start() {
         guard !isSuspended else { return }
         refresh()
-        if !accessibilityGranted {
-            prompt()
-        }
-        if !inputMonitoringGranted {
-            requestInputMonitoring(openSettingsIfNeeded: false)
-        }
+        // Missing permissions are requested through the onboarding window's
+        // drag-to-authorize guide instead of the stock system prompts.
         if !accessibilityGranted || !inputMonitoringGranted {
             startPolling()
         }

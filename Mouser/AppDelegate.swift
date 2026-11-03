@@ -46,6 +46,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             )
         }
 
+        if CommandLine.arguments.contains("-showOnboarding") {
+            OnboardingWindowController.show()
+        } else {
+            OnboardingWindowController.showIfNeeded()
+        }
+
         if CommandLine.arguments.contains("-showSettings") {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 SettingsWindowController.show()

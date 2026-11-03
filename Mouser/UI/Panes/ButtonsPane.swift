@@ -10,19 +10,34 @@ struct ButtonsPane: View {
             Section {
                 MouseDiagramView(selectedButton: $selectedButton)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 16)
+                    .background {
+                        RadialGradient(
+                            colors: [Color.accentColor.opacity(0.12), .clear],
+                            center: .center,
+                            startRadius: 10,
+                            endRadius: 200
+                        )
+                    }
                     .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
             }
 
             Section {
                 ForEach(MouseButton.allCases) { button in
-                    Picker(button.title, selection: binding(for: button)) {
+                    Picker(selection: binding(for: button)) {
                         ForEach(MouseAction.Category.allCases, id: \.self) { category in
                             Section(category.title) {
                                 ForEach(MouseAction.allCases.filter { $0.category == category }) { action in
                                     Text(action.title).tag(action)
                                 }
                             }
+                        }
+                    } label: {
+                        Label {
+                            Text(button.title)
+                        } icon: {
+                            Image(systemName: button.symbolName)
+                                .foregroundStyle(selectedButton == button ? Color.accentColor : Color.secondary)
                         }
                     }
                     .pickerStyle(.menu)
@@ -94,19 +109,41 @@ private struct MouseDiagramView: View {
 private struct HotspotButton: View {
     let isSelected: Bool
     let action: () -> Void
+    @State private var hovering = false
 
     var body: some View {
         Button(action: action) {
-            Circle()
-                .fill(isSelected ? Color.accentColor : Color.primary.opacity(0.25))
-                .overlay {
-                    Circle()
-                        .strokeBorder(Color.white.opacity(0.7), lineWidth: 1.5)
-                }
-                .frame(width: 16, height: 16)
-                .shadow(radius: 1)
+            ZStack {
+                Circle()
+                    .fill(Color.accentColor.opacity(isSelected ? 0.25 : 0))
+                    .frame(width: 30, height: 30)
+                Circle()
+                    .fill(isSelected || hovering ? Color.accentColor : Color.black.opacity(0.35))
+                    .overlay {
+                        Circle()
+                            .strokeBorder(Color.white.opacity(0.9), lineWidth: 2)
+                    }
+                    .frame(width: 16, height: 16)
+                    .shadow(color: .black.opacity(0.3), radius: 2, y: 1)
+            }
+            .scaleEffect(hovering ? 1.15 : 1)
+            .contentShape(Circle())
         }
         .buttonStyle(.plain)
+        .onHover { hovering = $0 }
+        .animation(.spring(duration: 0.25), value: hovering)
+        .animation(.spring(duration: 0.25), value: isSelected)
+    }
+}
+
+private extension MouseButton {
+    var symbolName: String {
+        switch self {
+        case .middle: "circle.circle"
+        case .back: "chevron.backward.circle"
+        case .forward: "chevron.forward.circle"
+        case .modeShift: "arrow.triangle.2.circlepath.circle"
+        }
     }
 }
 

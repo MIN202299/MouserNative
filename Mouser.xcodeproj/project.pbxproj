@@ -36,6 +36,8 @@
 		B00000000000000000000022 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000022 /* Localizable.xcstrings */; };
 		B00000000000000000000023 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000023 /* Assets.xcassets */; };
 B00000000000000000000030 = {isa = PBXBuildFile; fileRef = F00000000000000000000030; };
+		B000000000000000000000A1 /* PermissionGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = F000000000000000000000A1 /* PermissionGuide.swift */; };
+		B000000000000000000000A2 /* OnboardingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F000000000000000000000A2 /* OnboardingWindow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +71,8 @@ B00000000000000000000030 = {isa = PBXBuildFile; fileRef = F000000000000000000000
 		F00000000000000000000023 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		R00000000000000000000001 /* Mouser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mouser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 F00000000000000000000030 = {isa = PBXFileReference; lastKnownFileType = folder.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		F000000000000000000000A1 /* PermissionGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionGuide.swift; sourceTree = "<group>"; };
+		F000000000000000000000A2 /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +170,8 @@ F00000000000000000000030,
 				F00000000000000000000015 /* SettingsWindowController.swift */,
 				F00000000000000000000016 /* SettingsView.swift */,
 				F00000000000000000000021 /* MenuBarContentView.swift */,
+				F000000000000000000000A2 /* OnboardingWindow.swift */,
+				F000000000000000000000A1 /* PermissionGuide.swift */,
 				G00000000000000000000009 /* Panes */,
 			);
 			path = UI;
@@ -278,6 +284,8 @@ B00000000000000000000030,
 				B00000000000000000000018 /* PointerScrollPane.swift in Sources */,
 				B00000000000000000000019 /* BatteryPane.swift in Sources */,
 				B00000000000000000000020 /* GeneralPane.swift in Sources */,
+				B000000000000000000000A2 /* OnboardingWindow.swift in Sources */,
+				B000000000000000000000A1 /* PermissionGuide.swift in Sources */,
 				B00000000000000000000021 /* MenuBarContentView.swift in Sources */,
 				B00000000000000000000024 /* SystemActions.swift in Sources */,
 			);

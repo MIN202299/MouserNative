@@ -158,22 +158,42 @@ private struct DeviceHeaderView: View {
     let inputMonitoringGranted: Bool
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 10) {
             Image("MouseAnywhere3S")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 22, height: 36)
+                .frame(width: 24, height: 40)
                 .opacity(connected ? 1 : 0.35)
-            VStack(alignment: .leading, spacing: 1) {
+                .saturation(connected ? 1 : 0)
+            VStack(alignment: .leading, spacing: 3) {
                 Text(connected ? name : String(localized: "No mouse connected"))
                     .font(.headline)
+                    .foregroundStyle(.primary)
                     .lineLimit(1)
-                Text(statusText)
-                    .font(.caption)
-                    .foregroundStyle(inputMonitoringGranted ? Color.secondary : Color.red)
+                HStack(spacing: 5) {
+                    Circle()
+                        .fill(statusColor)
+                        .frame(width: 7, height: 7)
+                    Text(statusText)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(2)
+                }
             }
+            Spacer(minLength: 0)
         }
-        .padding(.vertical, 4)
+        .padding(10)
+        .background {
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(Color.primary.opacity(0.05))
+        }
+        .padding(.bottom, 8)
+        .textCase(nil)
+    }
+
+    private var statusColor: Color {
+        if connected { return .green }
+        return inputMonitoringGranted ? .orange : .red
     }
 
     private var statusText: String {
@@ -201,6 +221,54 @@ private struct SettingsDetailView: View {
         }
         .navigationTitle(tab.title)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .safeAreaInset(edge: .top, spacing: 0) {
+            PermissionBanner()
+        }
+    }
+}
+
+/// Shown above every pane while a required permission is missing.
+private struct PermissionBanner: View {
+    @State private var permissions = PermissionManager.shared
+
+    private var missing: [PrivacyPermission] {
+        PrivacyPermission.allCases.filter { !permissions.isGranted($0) }
+    }
+
+    var body: some View {
+        if let first = missing.first {
+            HStack(spacing: 10) {
+                Image(systemName: "lock.shield.fill")
+                    .font(.title3)
+                    .foregroundStyle(.orange)
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(String(localized: "Mouser needs your permission"))
+                        .font(.subheadline.weight(.semibold))
+                    Text(missing.map(\.title).formatted(.list(type: .and)))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Button(String(localized: "Allow…")) {
+                    PermissionGuideController.shared.show(first)
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.small)
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            .background {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color.orange.opacity(0.12))
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .strokeBorder(Color.orange.opacity(0.3), lineWidth: 1)
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 12)
+            .transition(.move(edge: .top).combined(with: .opacity))
+        }
     }
 }
 

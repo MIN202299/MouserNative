@@ -7,29 +7,53 @@ struct BatteryPane: View {
     var body: some View {
         Form {
             Section {
-                HStack(alignment: .center, spacing: 16) {
-                    Image(systemName: deviceState.batteryIconName)
-                        .font(.system(size: 44))
-                        .foregroundStyle(batteryColor)
-                        .frame(width: 60)
+                HStack(alignment: .center, spacing: 20) {
+                    ZStack {
+                        Circle()
+                            .stroke(Color.primary.opacity(0.08), lineWidth: 8)
+                        Circle()
+                            .trim(from: 0, to: CGFloat(deviceState.batteryLevel ?? 0) / 100)
+                            .stroke(batteryColor.gradient, style: StrokeStyle(lineWidth: 8, lineCap: .round))
+                            .rotationEffect(.degrees(-90))
+                        Image(systemName: deviceState.batteryCharging ? "bolt.fill" : "computermouse.fill")
+                            .font(.system(size: 22, weight: .medium))
+                            .foregroundStyle(deviceState.batteryLevel == nil ? Color.secondary : batteryColor)
+                    }
+                    .frame(width: 76, height: 76)
+                    .animation(.easeOut(duration: 0.6), value: deviceState.batteryLevel)
 
                     VStack(alignment: .leading, spacing: 4) {
                         if let level = deviceState.batteryLevel {
                             Text("\(level)%")
-                                .font(.largeTitle.bold())
-                            Text(deviceState.batteryCharging
-                                 ? String(localized: "Charging")
-                                 : String(localized: "Discharging"))
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                                .font(.system(size: 34, weight: .bold, design: .rounded))
+                                .monospacedDigit()
+                            Label(
+                                deviceState.batteryCharging
+                                    ? String(localized: "Charging")
+                                    : String(localized: "Discharging"),
+                                systemImage: deviceState.batteryIconName
+                            )
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
                         } else {
                             Text(String(localized: "No mouse connected"))
                                 .font(.headline)
                                 .foregroundStyle(.secondary)
                         }
                     }
+
+                    Spacer()
+
+                    Button {
+                        Task { await DeviceManager.shared.refreshBattery() }
+                    } label: {
+                        Image(systemName: "arrow.clockwise")
+                    }
+                    .help(String(localized: "Refresh"))
+                    .buttonStyle(.borderless)
+                    .disabled(!deviceState.connected)
                 }
-                .padding(.vertical, 4)
+                .padding(.vertical, 8)
             }
 
             Section {
@@ -42,14 +66,6 @@ struct BatteryPane: View {
                     }
                 }
                 .toggleStyle(.switch)
-
-                HStack(spacing: 8) {
-                    Button(String(localized: "Refresh")) {
-                        Task { await DeviceManager.shared.refreshBattery() }
-                    }
-                    .controlSize(.small)
-                    .disabled(!deviceState.connected)
-                }
             }
         }
         .formStyle(.grouped)
@@ -60,6 +76,10 @@ struct BatteryPane: View {
     private var batteryColor: Color {
         guard let level = deviceState.batteryLevel else { return .secondary }
         if deviceState.batteryCharging { return .green }
-        return level <= 20 ? .red : .primary
+        switch level {
+        case ...20: return .red
+        case ...40: return .orange
+        default: return .green
+        }
     }
 }

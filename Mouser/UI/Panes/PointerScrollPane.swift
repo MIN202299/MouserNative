@@ -8,21 +8,49 @@ struct PointerScrollPane: View {
     var body: some View {
         Form {
             Section {
-                LabeledContent(String(localized: "DPI")) {
-                    HStack(spacing: 12) {
-                        Slider(
-                            value: dpiDraftBinding,
-                            in: Double(DeviceState.dpiRange.lowerBound)...Double(DeviceState.dpiRange.upperBound),
-                            step: 50,
-                            onEditingChanged: handleDPIEditingChanged
-                        )
-                        .frame(width: 200)
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(alignment: .firstTextBaseline) {
+                        Text(String(localized: "DPI"))
+                        Spacer()
                         Text("\(dpiInteraction.displayedValue)")
+                            .font(.system(.title2, design: .rounded).weight(.semibold))
                             .monospacedDigit()
-                            .foregroundStyle(.secondary)
-                            .frame(width: 48, alignment: .trailing)
+                            .contentTransition(.numericText())
+                    }
+
+                    Slider(
+                        value: dpiDraftBinding,
+                        in: Double(DeviceState.dpiRange.lowerBound)...Double(DeviceState.dpiRange.upperBound),
+                        step: 50,
+                        label: { EmptyView() },
+                        minimumValueLabel: {
+                            Image(systemName: "tortoise")
+                                .foregroundStyle(.secondary)
+                        },
+                        maximumValueLabel: {
+                            Image(systemName: "hare")
+                                .foregroundStyle(.secondary)
+                        },
+                        onEditingChanged: handleDPIEditingChanged
+                    )
+                    .labelsHidden()
+
+                    HStack(spacing: 6) {
+                        ForEach(Self.dpiPresets, id: \.self) { preset in
+                            Button {
+                                applyDPIPreset(preset)
+                            } label: {
+                                Text("\(preset)")
+                                    .monospacedDigit()
+                                    .frame(maxWidth: .infinity)
+                            }
+                            .buttonStyle(.bordered)
+                            .tint(dpiInteraction.displayedValue == preset ? .accentColor : nil)
+                            .controlSize(.small)
+                        }
                     }
                 }
+                .padding(.vertical, 4)
                 .disabled(!deviceState.connected)
             } header: {
                 Text("Pointer")
@@ -85,6 +113,18 @@ struct PointerScrollPane: View {
         .onChange(of: deviceState.dpi) { _, newValue in
             if let newValue {
                 dpiInteraction.syncFromDevice(newValue)
+            }
+        }
+    }
+
+    private static let dpiPresets = [800, 1_200, 1_600, 2_400, 4_000]
+
+    private func applyDPIPreset(_ preset: Int) {
+        withAnimation { dpiInteraction.syncFromDevice(preset) }
+        Task {
+            let succeeded = await DeviceManager.shared.setDPI(preset)
+            if !succeeded, let deviceDPI = deviceState.dpi {
+                dpiInteraction.syncFromDevice(deviceDPI)
             }
         }
     }

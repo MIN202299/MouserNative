@@ -25,6 +25,24 @@ struct GeneralPane: View {
             }
 
             Section {
+                ForEach(PrivacyPermission.allCases) { permission in
+                    PermissionRow(
+                        permission: permission,
+                        granted: permissions.isGranted(permission),
+                        compact: true
+                    )
+                }
+            } header: {
+                Text("Permissions")
+            } footer: {
+                if !permissions.accessibilityGranted || !permissions.inputMonitoringGranted {
+                    Text("Click Allow, then drag Mouser into the list in System Settings.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+
+            Section {
                 Toggle(isOn: launchAtLoginBinding) {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(String(localized: "Launch at Login"))
@@ -34,46 +52,6 @@ struct GeneralPane: View {
                     }
                 }
                 .toggleStyle(.switch)
-
-                LabeledContent(String(localized: "Accessibility")) {
-                    HStack(spacing: 8) {
-                        Label(
-                            permissions.accessibilityGranted
-                                ? String(localized: "Granted")
-                                : String(localized: "Not granted"),
-                            systemImage: permissions.accessibilityGranted ? "checkmark.circle.fill" : "xmark.circle"
-                        )
-                        .foregroundStyle(permissions.accessibilityGranted ? .green : .red)
-                        .font(.subheadline)
-
-                        if !permissions.accessibilityGranted {
-                            Button(String(localized: "Open Settings…")) {
-                                permissions.openSystemSettings()
-                            }
-                            .controlSize(.small)
-                        }
-                    }
-                }
-
-                LabeledContent(String(localized: "Input Monitoring")) {
-                    HStack(spacing: 8) {
-                        Label(
-                            permissions.inputMonitoringGranted
-                                ? String(localized: "Granted")
-                                : String(localized: "Not granted"),
-                            systemImage: permissions.inputMonitoringGranted ? "checkmark.circle.fill" : "xmark.circle"
-                        )
-                        .foregroundStyle(permissions.inputMonitoringGranted ? .green : .red)
-                        .font(.subheadline)
-
-                        if !permissions.inputMonitoringGranted {
-                            Button(String(localized: "Open Settings…")) {
-                                permissions.requestInputMonitoring()
-                            }
-                            .controlSize(.small)
-                        }
-                    }
-                }
 
                 Toggle(isOn: $config.notifyOnActionFailure) {
                     VStack(alignment: .leading, spacing: 2) {
@@ -94,6 +72,7 @@ struct GeneralPane: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 64, height: 64)
+                        .shadow(color: .black.opacity(0.12), radius: 6, y: 3)
 
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Mouser")
@@ -106,6 +85,7 @@ struct GeneralPane: View {
                             .foregroundStyle(.secondary)
                     }
                 }
+                .padding(.vertical, 4)
             } header: {
                 Text("About")
             }

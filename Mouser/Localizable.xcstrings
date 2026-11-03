@@ -595,6 +595,118 @@
           "stringUnit" : { "state" : "translated", "value" : "写入设备固件（读-改-写，保留高分辨率位）。" }
         }
       }
+    },
+    "Allow…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "允许…" }
+        }
+      }
+    },
+    "Click Allow, then drag Mouser into the list in System Settings." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "点击「允许」，然后把 Mouser 拖进系统设置里的列表。" }
+        }
+      }
+    },
+    "Close" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "关闭" }
+        }
+      }
+    },
+    "Drag me" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "拖动我" }
+        }
+      }
+    },
+    "Drag Mouser into the list above" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "将 Mouser 拖到上方列表中" }
+        }
+      }
+    },
+    "Drop it into “%@”, then turn on the switch next to Mouser." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "拖入「%@」列表，然后打开 Mouser 旁边的开关。" }
+        }
+      }
+    },
+    "Get Started" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "开始使用" }
+        }
+      }
+    },
+    "Grant Permissions…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "授予权限…" }
+        }
+      }
+    },
+    "Later" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "稍后" }
+        }
+      }
+    },
+    "Lets Mouser perform remapped actions like shortcuts and clicks." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "让 Mouser 执行快捷键、点击等映射动作。" }
+        }
+      }
+    },
+    "Lets Mouser talk to your Logitech mouse over Bluetooth." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "让 Mouser 通过蓝牙与你的罗技鼠标通信。" }
+        }
+      }
+    },
+    "Mouser needs two macOS permissions to remap your mouse buttons. Everything stays on this Mac." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "Mouser 需要两项 macOS 权限来重映射鼠标按键。所有数据都只保留在这台 Mac 上。" }
+        }
+      }
+    },
+    "Mouser needs your permission" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "Mouser 需要你的授权" }
+        }
+      }
+    },
+    "Permission granted" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "已获得授权" }
+        }
+      }
+    },
+    "Permissions" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "权限" }
+        }
+      }
+    },
+    "Welcome to Mouser" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "欢迎使用 Mouser" }
+        }
+      }
     }
   },
   "version" : "1.0"
