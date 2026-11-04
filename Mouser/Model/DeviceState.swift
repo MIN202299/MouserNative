@@ -15,6 +15,9 @@ final class DeviceState {
     var smartShiftSupported = false
     var smartShiftEnabled = false
     var smartShiftThreshold = 25
+    /// Scroll wheel ratchet force in percent; nil when the firmware can't tune it.
+    var ratchetTorque: Int?
+    var defaultRatchetTorque: Int?
     var wheelModeByte: UInt8?
 
     static let dpiRange: ClosedRange<Int> = 200...8000

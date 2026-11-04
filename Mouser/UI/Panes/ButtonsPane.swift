@@ -24,14 +24,9 @@ struct ButtonsPane: View {
 
             Section {
                 ForEach(MouseButton.allCases) { button in
-                    Picker(selection: binding(for: button)) {
-                        ForEach(MouseAction.Category.allCases, id: \.self) { category in
-                            Section(category.title) {
-                                ForEach(MouseAction.allCases.filter { $0.category == category }) { action in
-                                    Text(action.title).tag(action)
-                                }
-                            }
-                        }
+                    LabeledContent {
+                        ActionPickerButton(selection: binding(for: button))
+                            .disabled(!deviceState.connected)
                     } label: {
                         Label {
                             Text(button.title)
@@ -40,8 +35,6 @@ struct ButtonsPane: View {
                                 .foregroundStyle(selectedButton == button ? Color.accentColor : Color.secondary)
                         }
                     }
-                    .pickerStyle(.menu)
-                    .disabled(!deviceState.connected)
                 }
             } header: {
                 Text("Button Assignments")
@@ -150,25 +143,18 @@ private extension MouseButton {
 private struct ButtonActionPopover: View {
     let button: MouseButton
     @State private var config = ConfigStore.shared
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(button.title)
+        VStack(spacing: 0) {
+            Label(button.title, systemImage: button.symbolName)
                 .font(.headline)
-            Picker(button.title, selection: binding) {
-                ForEach(MouseAction.Category.allCases, id: \.self) { category in
-                    Section(category.title) {
-                        ForEach(MouseAction.allCases.filter { $0.category == category }) { action in
-                            Text(action.title).tag(action)
-                        }
-                    }
-                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding([.horizontal, .top], 14)
+            ActionPickerList(selection: binding) {
+                dismiss()
             }
-            .pickerStyle(.menu)
-            .labelsHidden()
         }
-        .padding(12)
-        .frame(width: 240)
     }
 
     private var binding: Binding<MouseAction> {

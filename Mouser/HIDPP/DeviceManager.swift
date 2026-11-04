@@ -165,6 +165,7 @@ final class DeviceManager {
 
         await refreshAll()
         await restorePreferredDPI()
+        await restorePreferredRatchetTorque()
         await applyButtonConfiguration()
         // Direction is reversed in software (平滑滚动 → 反转滚动); clear any
         // firmware invert left over from older versions so they don't stack.
@@ -251,6 +252,8 @@ final class DeviceManager {
         state.batteryCharging = false
         state.dpi = nil
         state.wheelModeByte = nil
+        state.ratchetTorque = nil
+        state.defaultRatchetTorque = nil
         if !isSuspended {
             scheduleRetryScan()
         }
@@ -288,6 +291,13 @@ final class DeviceManager {
         print("[Mouser] DPI: \(DeviceState.shared.dpi ?? 0)")
     }
 
+    private func restorePreferredRatchetTorque() async {
+        guard let preferred = ConfigStore.shared.preferredRatchetTorque,
+              let current = DeviceState.shared.ratchetTorque, current != preferred
+        else { return }
+        _ = await setRatchetTorque(preferred)
+    }
+
     private func restorePreferredDPI() async {
         let config = ConfigStore.shared
         if let preferredDPI = config.preferredDPI {
@@ -305,6 +315,18 @@ final class DeviceManager {
         let mode = params.first ?? 0
         let autoDisengage = params.count > 1 ? Int(params[1]) : 0
         let state = DeviceState.shared
+        // 0x2111 getCapabilities: [flags, defaultAutoDisengage, defaultTorque, maxForce];
+        // getRatchetControlMode: [mode, autoDisengage, currentTorque].
+        if smartShiftEnhanced,
+           let caps = try? await session.request(feature: smartShiftIndex, function: 0),
+           let flags = caps.first, flags & HIDPP.SmartShiftMode.tunableTorqueCapability != 0,
+           params.count > 2 {
+            state.ratchetTorque = Int(params[2])
+            state.defaultRatchetTorque = caps.count > 2 ? Int(caps[2]) : nil
+        } else {
+            state.ratchetTorque = nil
+            state.defaultRatchetTorque = nil
+        }
         if mode == HIDPP.SmartShiftMode.freespin {
             state.smartShiftEnabled = false
         } else {
@@ -347,6 +369,49 @@ final class DeviceManager {
         if ok {
             DeviceState.shared.smartShiftEnabled = enabled
             DeviceState.shared.smartShiftThreshold = clamped
+        }
+        return ok
+    }
+
+    /// Sets the scroll wheel's ratchet force (0x2111 tunable torque).
+    ///
+    /// Like Solaar, the current wheel mode and SmartShift sensitivity are
+    /// written back explicitly together with the new torque; then the wheel is
+    /// briefly switched to free-spin and back so the ratchet magnet re-engages
+    /// at the new force (storing the torque alone doesn't change the feel).
+    @discardableResult
+    func setRatchetTorque(_ percent: Int) async -> Bool {
+        guard let session, let smartShiftIndex, smartShiftEnhanced,
+              DeviceState.shared.ratchetTorque != nil,
+              let current = try? await session.request(feature: smartShiftIndex, function: 1),
+              current.count > 2
+        else { return false }
+        let range = HIDPP.SmartShiftMode.torqueRange
+        let torque = UInt8(min(max(percent, range.lowerBound), range.upperBound))
+        let mode = current[0]
+        let autoDisengage = current[1]
+
+        func write(_ params: [UInt8]) async -> Bool {
+            (try? await session.request(feature: smartShiftIndex, function: 2, params: params)) != nil
+        }
+        var written = await write([mode, autoDisengage, torque])
+        if written && mode == HIDPP.SmartShiftMode.ratchet {
+            let noChange = HIDPP.SmartShiftMode.noChange
+            written = await write([HIDPP.SmartShiftMode.freespin, noChange, noChange])
+            written = await write([HIDPP.SmartShiftMode.ratchet, autoDisengage, torque]) && written
+        }
+
+        // Read back so the UI reflects what the firmware actually stored.
+        let after = try? await session.request(feature: smartShiftIndex, function: 1)
+        let readBack = after.flatMap { $0.count > 2 ? Int($0[2]) : nil }
+        let ok = written && readBack == Int(torque)
+            && after?.first == mode && after.map { $0[1] } == autoDisengage
+        print("[Mouser] Ratchet torque -> \(torque)%: \(ok ? "ok" : "failed") (state \(after.map { $0.prefix(3).map { String(format: "%02X", $0) } } ?? []))")
+        if let readBack {
+            DeviceState.shared.ratchetTorque = readBack
+        }
+        if ok {
+            ConfigStore.shared.preferredRatchetTorque = Int(torque)
         }
         return ok
     }

@@ -924,6 +924,34 @@
           "stringUnit" : { "state" : "translated", "value" : "未设置" }
         }
       }
+    },
+    "Search actions" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "搜索动作" }
+        }
+      }
+    },
+    "No matching actions" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "没有匹配的动作" }
+        }
+      }
+    },
+    "Scroll Wheel Force" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "滚轮力度" }
+        }
+      }
+    },
+    "How firmly the wheel clicks in ratchet mode." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "调整棘轮模式下滚轮每一格的阻尼力度。" }
+        }
+      }
     }
   },
   "version" : "1.0"

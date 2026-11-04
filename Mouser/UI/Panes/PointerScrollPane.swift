@@ -4,6 +4,7 @@ struct PointerScrollPane: View {
     @State private var deviceState = DeviceState.shared
     @State private var config = ConfigStore.shared
     @State private var dpiInteraction = DPISliderInteraction(initialValue: 1_000)
+    @State private var torqueDraft: Double?
 
     var body: some View {
         Form {
@@ -83,6 +84,53 @@ struct PointerScrollPane: View {
                                 .frame(width: 30, alignment: .trailing)
                         }
                     }
+                    .disabled(!deviceState.connected)
+                }
+
+                if let torque = deviceState.ratchetTorque {
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack(alignment: .firstTextBaseline) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(String(localized: "Scroll Wheel Force"))
+                                Text(String(localized: "How firmly the wheel clicks in ratchet mode."))
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            Text("\(Int(torqueDraft ?? Double(torque)))%")
+                                .monospacedDigit()
+                                .foregroundStyle(.secondary)
+                            if let defaultTorque = deviceState.defaultRatchetTorque, torque != defaultTorque {
+                                Button {
+                                    Task { await DeviceManager.shared.setRatchetTorque(defaultTorque) }
+                                } label: {
+                                    Image(systemName: "arrow.counterclockwise")
+                                }
+                                .buttonStyle(.borderless)
+                                .help(String(localized: "Restore Defaults"))
+                            }
+                        }
+                        Slider(
+                            value: Binding(
+                                get: { torqueDraft ?? Double(torque) },
+                                set: { torqueDraft = $0 }
+                            ),
+                            in: Double(HIDPP.SmartShiftMode.torqueRange.lowerBound)...Double(HIDPP.SmartShiftMode.torqueRange.upperBound),
+                            step: 1,
+                            label: { EmptyView() },
+                            minimumValueLabel: { Image(systemName: "dial.low").foregroundStyle(.secondary) },
+                            maximumValueLabel: { Image(systemName: "dial.high").foregroundStyle(.secondary) },
+                            onEditingChanged: { editing in
+                                guard !editing, let draft = torqueDraft else { return }
+                                Task {
+                                    await DeviceManager.shared.setRatchetTorque(Int(draft))
+                                    torqueDraft = nil
+                                }
+                            }
+                        )
+                        .labelsHidden()
+                    }
+                    .padding(.vertical, 2)
                     .disabled(!deviceState.connected)
                 }
             } header: {

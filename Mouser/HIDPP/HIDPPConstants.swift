@@ -38,6 +38,12 @@ enum HIDPP {
         static let ratchet: UInt8 = 0x02
         static let disableThreshold: UInt8 = 0xFF
         static let thresholdRange: ClosedRange<Int> = 1...50
+        /// Ratchet torque ("scroll wheel force") on 0x2111, in percent.
+        static let torqueRange: ClosedRange<Int> = 1...100
+        /// 0x2111 capabilities bit 0: the ratchet torque is tunable.
+        static let tunableTorqueCapability: UInt8 = 0x01
+        /// Written in place of a 0x2111 parameter to leave it unchanged.
+        static let noChange: UInt8 = 0x00
     }
 
     enum WheelModeBit {

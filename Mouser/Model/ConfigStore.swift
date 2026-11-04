@@ -32,6 +32,11 @@ final class ConfigStore {
         didSet { defaults.set(notifyOnActionFailure, forKey: "notifyOnActionFailure") }
     }
 
+    /// Ratchet force to re-apply on every connect; nil keeps the device's own.
+    var preferredRatchetTorque: Int? {
+        didSet { defaults.set(preferredRatchetTorque, forKey: "preferredRatchetTorque") }
+    }
+
     var preferredDPI: Int? {
         get { dpiStore.savedValue }
         set {
@@ -60,6 +65,7 @@ final class ConfigStore {
         } else {
             scroll = ScrollSettings()
         }
+        preferredRatchetTorque = defaults.object(forKey: "preferredRatchetTorque") as? Int
         showBatteryInMenuBar = defaults.object(forKey: "showBatteryInMenuBar") as? Bool ?? true
         notifyOnActionFailure = defaults.object(forKey: "notifyOnActionFailure") as? Bool ?? true
     }
