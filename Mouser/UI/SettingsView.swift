@@ -4,6 +4,7 @@ import SwiftUI
 enum SettingsTab: String, CaseIterable, Identifiable {
     case buttons
     case pointerScroll
+    case smoothScroll
     case battery
     case general
 
@@ -13,6 +14,7 @@ enum SettingsTab: String, CaseIterable, Identifiable {
         switch self {
         case .buttons: String(localized: "Buttons")
         case .pointerScroll: String(localized: "Pointer & Scroll")
+        case .smoothScroll: String(localized: "Smooth Scrolling")
         case .battery: String(localized: "Battery")
         case .general: String(localized: "General")
         }
@@ -21,7 +23,8 @@ enum SettingsTab: String, CaseIterable, Identifiable {
     var systemImage: String {
         switch self {
         case .buttons: "computermouse"
-        case .pointerScroll: "scroll"
+        case .pointerScroll: "cursorarrow.motionlines"
+        case .smoothScroll: "scroll"
         case .battery: "battery.100"
         case .general: "gearshape"
         }
@@ -215,6 +218,7 @@ private struct SettingsDetailView: View {
             switch tab {
             case .buttons: ButtonsPane()
             case .pointerScroll: PointerScrollPane()
+            case .smoothScroll: SmoothScrollPane()
             case .battery: BatteryPane()
             case .general: GeneralPane()
             }

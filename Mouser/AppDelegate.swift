@@ -10,6 +10,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         PermissionManager.shared.onAccessibilityGranted = {
             ButtonInterceptor.shared.start()
+            ScrollEngine.shared.start()
         }
         PermissionManager.shared.onInputMonitoringGranted = {
             DeviceManager.shared.start()
@@ -19,6 +20,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         print("[Mouser] Input Monitoring granted: \(PermissionManager.shared.inputMonitoringGranted)")
         if PermissionManager.shared.accessibilityGranted {
             ButtonInterceptor.shared.start()
+            ScrollEngine.shared.start()
         }
         if PermissionManager.shared.inputMonitoringGranted {
             DeviceManager.shared.start()
@@ -46,6 +48,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             )
         }
 
+        #if DEBUG
+        ScrollSelfTest.runIfRequested()
+        #endif
+
         if CommandLine.arguments.contains("-previewPermissionGuide") {
             PermissionGuideController.shared.show(.accessibility, preview: true)
         } else if CommandLine.arguments.contains("-showOnboarding") {
@@ -59,6 +65,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 SettingsWindowController.show()
             }
         }
+    }
+
+    /// Opening Mouser again while it is already running (Finder, Launchpad,
+    /// Spotlight, Dock) brings its window back instead of doing nothing.
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        let permissions = PermissionManager.shared
+        permissions.refresh()
+        if permissions.accessibilityGranted && permissions.inputMonitoringGranted {
+            SettingsWindowController.show()
+        } else {
+            OnboardingWindowController.show()
+        }
+        return true
     }
 
     func applicationWillTerminate(_ notification: Notification) {

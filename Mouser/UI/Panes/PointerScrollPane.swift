@@ -85,17 +85,6 @@ struct PointerScrollPane: View {
                     }
                     .disabled(!deviceState.connected)
                 }
-
-                Toggle(isOn: invertBinding) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(String(localized: "Invert scroll direction"))
-                        Text(String(localized: "Written to the device firmware (read-modify-write, hi-res bit preserved)."))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .toggleStyle(.switch)
-                .disabled(!deviceState.connected)
             } header: {
                 Text("Scroll Wheel")
             }
@@ -162,16 +151,6 @@ struct PointerScrollPane: View {
             get: { Double(deviceState.smartShiftThreshold) },
             set: { newValue in
                 Task { await DeviceManager.shared.setSmartShift(enabled: true, threshold: Int(newValue)) }
-            }
-        )
-    }
-
-    private var invertBinding: Binding<Bool> {
-        Binding(
-            get: { config.invertScrollVertical },
-            set: { newValue in
-                config.invertScrollVertical = newValue
-                Task { await DeviceManager.shared.setWheelInvertVertical(newValue) }
             }
         )
     }

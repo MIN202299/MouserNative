@@ -253,13 +253,6 @@
         }
       }
     },
-    "Invert scroll direction" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : { "state" : "translated", "value" : "反转滚动方向" }
-        }
-      }
-    },
     "Launch at Login" : {
       "localizations" : {
         "zh-Hans" : {
@@ -589,13 +582,6 @@
         }
       }
     },
-    "Written to the device firmware (read-modify-write, hi-res bit preserved)." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : { "state" : "translated", "value" : "写入设备固件（读-改-写，保留高分辨率位）。" }
-        }
-      }
-    },
     "Allow…" : {
       "localizations" : {
         "zh-Hans" : {
@@ -705,6 +691,237 @@
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : { "state" : "translated", "value" : "把图标拖入「%@」列表，再打开开关。" }
+        }
+      }
+    },
+    "Smooth Scrolling" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "平滑滚动" }
+        }
+      }
+    },
+    "Vertical" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "垂直" }
+        }
+      }
+    },
+    "Horizontal" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "水平" }
+        }
+      }
+    },
+    "Requires Accessibility permission." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "需要「辅助功能」权限。" }
+        }
+      }
+    },
+    "Minimum Step" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "最短步长" }
+        }
+      }
+    },
+    "Restore Defaults" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "恢复默认" }
+        }
+      }
+    },
+    "Reverse vertical scrolling" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "反转垂直滚动" }
+        }
+      }
+    },
+    "Reverse horizontal scrolling" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "反转水平滚动" }
+        }
+      }
+    },
+    "Accelerate" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "加速" }
+        }
+      }
+    },
+    "None" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "无" }
+        }
+      }
+    },
+    "Remove" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "移除" }
+        }
+      }
+    },
+    "Enable smooth scrolling" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "启用流畅滚动" }
+        }
+      }
+    },
+    "Smooth vertical scrolling" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "平滑垂直滚动" }
+        }
+      }
+    },
+    "Smooth horizontal scrolling" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "平滑水平滚动" }
+        }
+      }
+    },
+    "Simulate trackpad (Beta)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "模拟触控板 (Beta)" }
+        }
+      }
+    },
+    "May affect scrolling behavior." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "可能会影响滚动行为。" }
+        }
+      }
+    },
+    "Reverse Scrolling" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "反转滚动" }
+        }
+      }
+    },
+    "Reverse wheel direction" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "反转滚轮方向" }
+        }
+      }
+    },
+    "Accelerate Key" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "加速键" }
+        }
+      }
+    },
+    "Speeds up scrolling on long pages" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "加快在长页面时的滚动速度" }
+        }
+      }
+    },
+    "Toggle Key" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "转换键" }
+        }
+      }
+    },
+    "Hold to turn vertical scrolling into horizontal scrolling" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "按下时将垂直方向的滚动变换为水平方向" }
+        }
+      }
+    },
+    "Disable Key" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "禁用键" }
+        }
+      }
+    },
+    "Hold to disable smooth scrolling" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "按下时禁用平滑滚动" }
+        }
+      }
+    },
+    "Controls the minimum distance of a single scroll" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "控制单次滚动的最短距离" }
+        }
+      }
+    },
+    "Speed Gain" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "速度增益" }
+        }
+      }
+    },
+    "Controls the tracking speed gain of continuous scrolling" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "控制持续滚动的跟踪速度增益" }
+        }
+      }
+    },
+    "Duration" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "持续时间" }
+        }
+      }
+    },
+    "Controls the easing duration of scrolling" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "控制滚动的缓动持续时间" }
+        }
+      }
+    },
+    "Fixed while simulating a trackpad" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "模拟触控板时持续时间固定" }
+        }
+      }
+    },
+    "Clear" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "清除" }
+        }
+      }
+    },
+    "Press a modifier key…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "请按下修饰键…" }
+        }
+      }
+    },
+    "Not set" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "未设置" }
         }
       }
     }

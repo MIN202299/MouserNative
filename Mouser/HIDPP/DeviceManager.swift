@@ -166,7 +166,9 @@ final class DeviceManager {
         await refreshAll()
         await restorePreferredDPI()
         await applyButtonConfiguration()
-        await setWheelInvertVertical(ConfigStore.shared.invertScrollVertical)
+        // Direction is reversed in software (平滑滚动 → 反转滚动); clear any
+        // firmware invert left over from older versions so they don't stack.
+        await setWheelInvertVertical(false)
 
         batteryTimer?.invalidate()
         batteryTimer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { [weak self] _ in

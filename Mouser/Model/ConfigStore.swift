@@ -9,13 +9,19 @@ final class ConfigStore {
     private let defaults = UserDefaults.standard
     private let dpiStore = DPIValueStore()
     private static let mappingsKey = "buttonMappings"
+    private static let scrollKey = "scrollOptions"
 
     var buttonMappings: [MouseButton: MouseAction] {
         didSet { saveMappings() }
     }
 
-    var invertScrollVertical: Bool {
-        didSet { defaults.set(invertScrollVertical, forKey: "invertScrollVertical") }
+    var scroll: ScrollSettings {
+        didSet {
+            guard scroll != oldValue else { return }
+            ScrollEngine.shared.apply(scroll)
+            guard let data = try? JSONEncoder().encode(scroll) else { return }
+            defaults.set(data, forKey: Self.scrollKey)
+        }
     }
 
     var showBatteryInMenuBar: Bool {
@@ -48,7 +54,12 @@ final class ConfigStore {
         } else {
             buttonMappings = [:]
         }
-        invertScrollVertical = defaults.bool(forKey: "invertScrollVertical")
+        if let data = defaults.data(forKey: Self.scrollKey),
+           let decoded = try? JSONDecoder().decode(ScrollSettings.self, from: data) {
+            scroll = decoded
+        } else {
+            scroll = ScrollSettings()
+        }
         showBatteryInMenuBar = defaults.object(forKey: "showBatteryInMenuBar") as? Bool ?? true
         notifyOnActionFailure = defaults.object(forKey: "notifyOnActionFailure") as? Bool ?? true
     }
