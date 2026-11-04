@@ -624,20 +624,6 @@
         }
       }
     },
-    "Drag Mouser into the list above" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : { "state" : "translated", "value" : "将 Mouser 拖到上方列表中" }
-        }
-      }
-    },
-    "Drop it into “%@”, then turn on the switch next to Mouser." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : { "state" : "translated", "value" : "拖入「%@」列表，然后打开 Mouser 旁边的开关。" }
-        }
-      }
-    },
     "Get Started" : {
       "localizations" : {
         "zh-Hans" : {
@@ -705,6 +691,20 @@
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : { "state" : "translated", "value" : "欢迎使用 Mouser" }
+        }
+      }
+    },
+    "Can't find %@?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "找不到 %@？" }
+        }
+      }
+    },
+    "Drag the icon into the “%@” list, then turn on the switch." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : { "state" : "translated", "value" : "把图标拖入「%@」列表，再打开开关。" }
         }
       }
     }

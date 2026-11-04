@@ -61,15 +61,21 @@ final class PermissionGuideController {
     private var model = PermissionGuideModel()
     private var lastSettingsFrame: CGRect?
 
-    private static let panelSize = CGSize(width: 380, height: 168)
+    private static let panelHeight: CGFloat = 92
+    private static let fallbackWidth: CGFloat = 560
     private static let settingsBundleID = "com.apple.systempreferences"
 
     private init() {}
 
-    func show(_ permission: PrivacyPermission) {
+    private var isPreview = false
+
+    /// `preview` shows the panel even when the permission is already granted
+    /// (used by the `-previewPermissionGuide` launch argument).
+    func show(_ permission: PrivacyPermission, preview: Bool = false) {
         let permissions = PermissionManager.shared
         permissions.refresh()
-        guard !permissions.isGranted(permission) else { return }
+        guard preview || !permissions.isGranted(permission) else { return }
+        isPreview = preview
 
         if let url = permission.settingsURL {
             NSWorkspace.shared.open(url)
@@ -94,7 +100,7 @@ final class PermissionGuideController {
 
     private func makePanel() -> NSPanel {
         let panel = NSPanel(
-            contentRect: NSRect(origin: .zero, size: Self.panelSize),
+            contentRect: NSRect(x: 0, y: 0, width: Self.fallbackWidth, height: Self.panelHeight),
             styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered,
             defer: false
@@ -111,7 +117,8 @@ final class PermissionGuideController {
         let hosting = NSHostingView(rootView: PermissionGuideView(model: model) { [weak self] in
             self?.close()
         })
-        hosting.frame = NSRect(origin: .zero, size: Self.panelSize)
+        hosting.frame = NSRect(x: 0, y: 0, width: Self.fallbackWidth, height: Self.panelHeight)
+        hosting.autoresizingMask = [.width, .height]
         panel.contentView = hosting
         return panel
     }
@@ -128,7 +135,7 @@ final class PermissionGuideController {
         let permissions = PermissionManager.shared
         permissions.refresh()
 
-        if permissions.isGranted(permission), !model.granted {
+        if !isPreview, permissions.isGranted(permission), !model.granted {
             withAnimation(.spring(duration: 0.35)) { model.granted = true }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) { [weak self] in
                 guard let self, self.model.granted else { return }
@@ -146,29 +153,28 @@ final class PermissionGuideController {
         position(panel, animated: true)
     }
 
-    /// Places the panel just below the System Settings window (centered on it),
-    /// falling back to overlapping its bottom edge or the screen's bottom center.
+    /// Docks the panel directly under the System Settings window at the same
+    /// width; if there is no room below, it sits inside the window's bottom edge.
     private func position(_ panel: NSPanel, animated: Bool) {
-        let size = Self.panelSize
         let settingsFrame = Self.systemSettingsWindowFrame()
         if let settingsFrame, settingsFrame == lastSettingsFrame, panel.isVisible { return }
         lastSettingsFrame = settingsFrame
 
-        var origin: CGPoint
+        let height = Self.panelHeight
+        let frame: NSRect
         if let settingsFrame {
             let screen = NSScreen.screens.first { $0.frame.intersects(settingsFrame) } ?? NSScreen.main
             let visible = screen?.visibleFrame ?? settingsFrame
-            origin = CGPoint(x: settingsFrame.midX - size.width / 2, y: settingsFrame.minY - size.height - 10)
-            if origin.y < visible.minY + 8 {
-                origin.y = settingsFrame.minY + 16
+            var y = settingsFrame.minY - height - 8
+            if y < visible.minY + 4 {
+                y = settingsFrame.minY + 12
             }
-            origin.x = min(max(origin.x, visible.minX + 8), visible.maxX - size.width - 8)
+            frame = NSRect(x: settingsFrame.minX, y: y, width: settingsFrame.width, height: height)
         } else {
             let visible = NSScreen.main?.visibleFrame ?? .zero
-            origin = CGPoint(x: visible.midX - size.width / 2, y: visible.minY + 40)
+            let width = Self.fallbackWidth
+            frame = NSRect(x: visible.midX - width / 2, y: visible.minY + 40, width: width, height: height)
         }
-
-        let frame = NSRect(origin: origin, size: size)
         panel.setFrame(frame, display: true, animate: animated && panel.isVisible)
     }
 
@@ -214,121 +220,88 @@ final class PermissionGuideModel {
 private struct PermissionGuideView: View {
     let model: PermissionGuideModel
     let onClose: () -> Void
-    @State private var nudge = false
-
-    var body: some View {
-        ZStack(alignment: .topTrailing) {
-            content
-                .padding(16)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-            Button(action: onClose) {
-                Image(systemName: "xmark")
-                    .font(.system(size: 9, weight: .bold))
-                    .foregroundStyle(.secondary)
-                    .frame(width: 18, height: 18)
-                    .background(.quaternary, in: Circle())
-            }
-            .buttonStyle(.plain)
-            .padding(10)
-            .help(String(localized: "Close"))
-        }
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .strokeBorder(.white.opacity(0.12), lineWidth: 1)
-        }
-    }
-
-    @ViewBuilder
-    private var content: some View {
-        if model.granted {
-            VStack(spacing: 8) {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 40))
-                    .foregroundStyle(.green)
-                    .symbolEffect(.bounce, value: model.granted)
-                Text(String(localized: "Permission granted"))
-                    .font(.headline)
-            }
-            .transition(.scale.combined(with: .opacity))
-        } else {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 8) {
-                    Image(systemName: "arrow.up")
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundStyle(.tint)
-                        .offset(y: nudge ? -3 : 1)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(String(localized: "Drag Mouser into the list above"))
-                            .font(.headline)
-                        Text(instructionText)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-                .padding(.trailing, 20)
-
-                DraggableAppTile()
-                    .frame(height: 64)
-            }
-            .onAppear {
-                withAnimation(.easeInOut(duration: 0.7).repeatForever(autoreverses: true)) {
-                    nudge = true
-                }
-            }
-        }
-    }
-
-    private var instructionText: String {
-        let name = model.permission?.title ?? ""
-        return String(localized: "Drop it into “\(name)”, then turn on the switch next to Mouser.")
-    }
-}
-
-/// The app tile users drag into System Settings. Drawing is SwiftUI; the drag
-/// itself is an AppKit dragging session carrying Mouser.app's file URL.
-private struct DraggableAppTile: View {
     @State private var hovering = false
 
     var body: some View {
-        HStack(spacing: 12) {
-            Image(nsImage: NSApp.applicationIconImage)
-                .resizable()
-                .frame(width: 40, height: 40)
-            VStack(alignment: .leading, spacing: 1) {
-                Text(appName)
-                    .font(.body.weight(.semibold))
-                Text(String(localized: "Drag me"))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+        HStack(spacing: 16) {
+            DraggableAppIcon()
+
+            VStack(alignment: .leading, spacing: 4) {
+                if model.granted {
+                    Label(String(localized: "Permission granted"), systemImage: "checkmark.circle.fill")
+                        .font(.headline)
+                        .foregroundStyle(.green)
+                        .transition(.opacity)
+                } else {
+                    Text(String(localized: "Can't find \(appName)?"))
+                        .font(.headline)
+                    Text(instructionText)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
-            Spacer()
-            Image(systemName: "hand.draw")
-                .font(.title3)
-                .foregroundStyle(.secondary)
+
+            Spacer(minLength: 0)
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 14)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background {
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(Color.primary.opacity(hovering ? 0.09 : 0.05))
-        }
+        .background(
+            Color(nsColor: .windowBackgroundColor),
+            in: RoundedRectangle(cornerRadius: 16, style: .continuous)
+        )
         .overlay {
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .strokeBorder(
-                    Color.accentColor.opacity(hovering ? 0.8 : 0.45),
-                    style: StrokeStyle(lineWidth: 1.5, dash: [5, 4])
-                )
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(Color.primary.opacity(0.08), lineWidth: 1)
         }
-        .overlay { AppDragSourceView() }
+        .overlay(alignment: .topTrailing) {
+            if hovering && !model.granted {
+                Button(action: onClose) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundStyle(.secondary)
+                        .frame(width: 18, height: 18)
+                        .background(.quaternary, in: Circle())
+                }
+                .buttonStyle(.plain)
+                .padding(8)
+                .help(String(localized: "Close"))
+            }
+        }
         .onHover { hovering = $0 }
-        .animation(.easeOut(duration: 0.15), value: hovering)
+        .animation(.easeOut(duration: 0.2), value: model.granted)
     }
 
     private var appName: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "Mouser"
+    }
+
+    private var instructionText: String {
+        let name = model.permission?.title ?? ""
+        return String(localized: "Drag the icon into the “\(name)” list, then turn on the switch.")
+    }
+}
+
+/// The app icon users drag into System Settings. Drawing is SwiftUI; the drag
+/// itself is an AppKit dragging session carrying Mouser.app's file URL.
+private struct DraggableAppIcon: View {
+    @State private var hovering = false
+
+    var body: some View {
+        Image(nsImage: NSApp.applicationIconImage)
+            .resizable()
+            .frame(width: 52, height: 52)
+            .padding(8)
+            .background {
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .fill(Color.primary.opacity(hovering ? 0.08 : 0.04))
+            }
+            .scaleEffect(hovering ? 1.05 : 1)
+            .overlay { AppDragSourceView() }
+            .onHover { hovering = $0 }
+            .animation(.spring(duration: 0.25), value: hovering)
+            .help(String(localized: "Drag me"))
     }
 }
 

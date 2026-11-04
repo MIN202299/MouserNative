@@ -46,7 +46,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             )
         }
 
-        if CommandLine.arguments.contains("-showOnboarding") {
+        if CommandLine.arguments.contains("-previewPermissionGuide") {
+            PermissionGuideController.shared.show(.accessibility, preview: true)
+        } else if CommandLine.arguments.contains("-showOnboarding") {
             OnboardingWindowController.show()
         } else {
             OnboardingWindowController.showIfNeeded()
