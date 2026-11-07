@@ -11,7 +11,8 @@ struct MouserApp: App {
             MenuBarContentView()
         } label: {
             HStack(spacing: 3) {
-                Image(systemName: "computermouse")
+                Image("MenuBarIcon")
+                    .renderingMode(.template)
                 if config.showBatteryInMenuBar, deviceState.connected, let level = deviceState.batteryLevel {
                     Text(verbatim: "\(level)%")
                 }

@@ -181,3 +181,8 @@ MouserApp (MenuBarExtra 菜单栏应用, LSUIElement)
 - **Options+ 冲突检测**：启动时扫描运行中的应用（`com.logi.*options*`)，发现即通知
 - **登录项**:`SMAppService.mainApp` 注册/注销
 - **本地化**:`Localizable.xcstrings`（中/英）
+
+## 图标致谢
+
+- 菜单栏鼠标图标来自 [Basil](https://www.figma.com/community/file/931906394678748246) 图标集（作者 Craftwork，[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)），通过 [Iconify](https://iconify.design/) 获取
+- 侧栏的指针、平滑滚动、电量、通用图标来自 [Solar](https://www.figma.com/community/file/1166831539721848736) 图标集（作者 480 Design，[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)），通过 Iconify 获取

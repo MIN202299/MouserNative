@@ -281,6 +281,7 @@ final class DeviceManager {
         print("[Mouser] Battery: \(level)%\(charging ? " (charging)" : "")")
         DeviceState.shared.batteryLevel = Int(level)
         DeviceState.shared.batteryCharging = charging
+        BatteryHistory.shared.record(level: Int(level), charging: charging)
     }
 
     func refreshDPI() async {

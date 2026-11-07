@@ -20,13 +20,16 @@ enum SettingsTab: String, CaseIterable, Identifiable {
         }
     }
 
-    var systemImage: String {
+    /// Sidebar icon, drawn in the same thin rounded line style as the menu
+    /// bar icon: the Buttons tab reuses the menu bar mouse (Basil), the rest
+    /// are Solar "linear" icons (480 Design, CC BY 4.0) via Iconify.
+    var icon: Image {
         switch self {
-        case .buttons: "computermouse"
-        case .pointerScroll: "cursorarrow.motionlines"
-        case .smoothScroll: "scroll"
-        case .battery: "battery.100"
-        case .general: "gearshape"
+        case .buttons: Image("MenuBarIcon")
+        case .pointerScroll: Image("SidebarPointer")
+        case .smoothScroll: Image("SidebarScroll")
+        case .battery: Image("SidebarBattery")
+        case .general: Image("SidebarGeneral")
         }
     }
 }
@@ -39,13 +42,6 @@ final class SettingsNavigation {
     var selectedTab: SettingsTab? = .buttons
 
     private init() {}
-}
-
-private enum AppVersion {
-    static let displayString: String = {
-        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0"
-        return AppVersionFormatter.sidebarText(version: version)
-    }()
 }
 
 struct SettingsView: View {
@@ -127,8 +123,12 @@ private struct SettingsSidebarView: View {
         List(selection: $selectedTab) {
             Section {
                 ForEach(SettingsTab.allCases) { tab in
-                    Label(tab.title, systemImage: tab.systemImage)
-                        .foregroundStyle(.primary)
+                    Label {
+                        Text(tab.title)
+                    } icon: {
+                        SidebarIcon(image: tab.icon)
+                    }
+                    .foregroundStyle(.primary)
                         .tag(tab)
                 }
             } header: {
@@ -139,19 +139,24 @@ private struct SettingsSidebarView: View {
                 )
             }
 
-            Text(AppVersion.displayString)
-                .font(.footnote)
-                .foregroundStyle(.tertiary)
-                .fontDesign(.monospaced)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 6)
-                .padding(.vertical, 8)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 6, trailing: 0))
         }
         .listStyle(.sidebar)
         .scrollEdgeEffectStyleSoftIfAvailable()
         .navigationTitle(String(localized: "Mouser Settings"))
+    }
+}
+
+/// Draws every sidebar icon in the same fixed box with the same rendering.
+private struct SidebarIcon: View {
+    let image: Image
+
+    var body: some View {
+        image
+            .renderingMode(.template)
+            .resizable()
+            .interpolation(.high)
+            .scaledToFit()
+            .frame(width: 18, height: 18)
     }
 }
 
@@ -162,8 +167,10 @@ private struct DeviceHeaderView: View {
 
     var body: some View {
         HStack(spacing: 10) {
-            Image("MouseAnywhere3S")
+            Image("MouseAnywhere3SThumb")
                 .resizable()
+                .interpolation(.high)
+                .antialiased(true)
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 24, height: 40)
                 .opacity(connected ? 1 : 0.35)

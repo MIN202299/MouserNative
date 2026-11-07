@@ -22,7 +22,6 @@ struct PointerScrollPane: View {
                     Slider(
                         value: dpiDraftBinding,
                         in: Double(DeviceState.dpiRange.lowerBound)...Double(DeviceState.dpiRange.upperBound),
-                        step: 50,
                         label: { EmptyView() },
                         minimumValueLabel: {
                             Image(systemName: "tortoise")
@@ -74,8 +73,7 @@ struct PointerScrollPane: View {
                         HStack(spacing: 12) {
                             Slider(
                                 value: thresholdBinding,
-                                in: Double(HIDPP.SmartShiftMode.thresholdRange.lowerBound)...Double(HIDPP.SmartShiftMode.thresholdRange.upperBound),
-                                step: 1
+                                in: Double(HIDPP.SmartShiftMode.thresholdRange.lowerBound)...Double(HIDPP.SmartShiftMode.thresholdRange.upperBound)
                             )
                             .frame(width: 160)
                             Text("\(deviceState.smartShiftThreshold)")
@@ -113,10 +111,9 @@ struct PointerScrollPane: View {
                         Slider(
                             value: Binding(
                                 get: { torqueDraft ?? Double(torque) },
-                                set: { torqueDraft = $0 }
+                                set: { torqueDraft = $0.rounded() }
                             ),
                             in: Double(HIDPP.SmartShiftMode.torqueRange.lowerBound)...Double(HIDPP.SmartShiftMode.torqueRange.upperBound),
-                            step: 1,
                             label: { EmptyView() },
                             minimumValueLabel: { Image(systemName: "dial.low").foregroundStyle(.secondary) },
                             maximumValueLabel: { Image(systemName: "dial.high").foregroundStyle(.secondary) },
@@ -170,7 +167,8 @@ struct PointerScrollPane: View {
         Binding(
             get: { Double(dpiInteraction.displayedValue) },
             set: { newValue in
-                dpiInteraction.update(to: newValue)
+                // Snap to 50 here instead of `step:`, which draws tick dots.
+                dpiInteraction.update(to: (newValue / 50).rounded() * 50)
             }
         )
     }
@@ -198,7 +196,9 @@ struct PointerScrollPane: View {
         Binding(
             get: { Double(deviceState.smartShiftThreshold) },
             set: { newValue in
-                Task { await DeviceManager.shared.setSmartShift(enabled: true, threshold: Int(newValue)) }
+                let threshold = Int(newValue.rounded())
+                guard threshold != deviceState.smartShiftThreshold else { return }
+                Task { await DeviceManager.shared.setSmartShift(enabled: true, threshold: threshold) }
             }
         )
     }

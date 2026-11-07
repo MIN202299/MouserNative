@@ -75,6 +75,8 @@ private struct MouseDiagramView: View {
         ZStack {
             Image("MouseAnywhere3S")
                 .resizable()
+                .interpolation(.high)
+                .antialiased(true)
                 .aspectRatio(contentMode: .fit)
                 .frame(width: width, height: height)
 
