@@ -18,6 +18,7 @@
 		B00000000000000000000009 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000009 /* Action.swift */; };
 		B00000000000000000000010 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000010 /* ConfigStore.swift */; };
 		B00000000000000000000025 /* DPISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000025 /* DPISettings.swift */; };
+		B00000000000000000000040 /* LowBatteryAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000040 /* LowBatteryAlert.swift */; };
 		B00000000000000000000028 /* AppVersionFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000028 /* AppVersionFormatter.swift */; };
 		B00000000000000000000011 /* ButtonInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000011 /* ButtonInterceptor.swift */; };
 		B00000000000000000000012 /* ActionPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000012 /* ActionPerformer.swift */; };
@@ -56,6 +57,7 @@ B00000000000000000000030 = {isa = PBXBuildFile; fileRef = F000000000000000000000
 		F00000000000000000000009 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		F00000000000000000000010 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 		F00000000000000000000025 /* DPISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPISettings.swift; sourceTree = "<group>"; };
+		F00000000000000000000040 /* LowBatteryAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowBatteryAlert.swift; sourceTree = "<group>"; };
 		F00000000000000000000028 /* AppVersionFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionFormatter.swift; sourceTree = "<group>"; };
 		F00000000000000000000011 /* ButtonInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonInterceptor.swift; sourceTree = "<group>"; };
 		F00000000000000000000012 /* ActionPerformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionPerformer.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@ F00000000000000000000030,
 				F00000000000000000000009 /* Action.swift */,
 				F00000000000000000000010 /* ConfigStore.swift */,
 				F00000000000000000000025 /* DPISettings.swift */,
+				F00000000000000000000040 /* LowBatteryAlert.swift */,
 				F00000000000000000000028 /* AppVersionFormatter.swift */,
 				F000000000000000000000A3 /* ScrollSettings.swift */,
 			);
@@ -283,6 +286,7 @@ B00000000000000000000030,
 				B00000000000000000000009 /* Action.swift in Sources */,
 				B00000000000000000000010 /* ConfigStore.swift in Sources */,
 				B00000000000000000000025 /* DPISettings.swift in Sources */,
+				B00000000000000000000040 /* LowBatteryAlert.swift in Sources */,
 				B00000000000000000000028 /* AppVersionFormatter.swift in Sources */,
 				B00000000000000000000011 /* ButtonInterceptor.swift in Sources */,
 				B00000000000000000000012 /* ActionPerformer.swift in Sources */,

@@ -4,6 +4,7 @@ import SwiftUI
 struct BatteryPane: View {
     @State private var deviceState = DeviceState.shared
     @State private var config = ConfigStore.shared
+    @State private var thresholdDraft: Double?
 
     var body: some View {
         Form {
@@ -73,6 +74,50 @@ struct BatteryPane: View {
                     }
                 }
                 .toggleStyle(.switch)
+
+                Toggle(isOn: $config.lowBatteryAlertEnabled) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(String(localized: "Low battery alert"))
+                        Text(String(localized: "Show a notification when the mouse battery runs low, and again when it's critically low."))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .toggleStyle(.switch)
+
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(alignment: .firstTextBaseline) {
+                        Text(String(localized: "Alert when battery is at or below"))
+                        Spacer()
+                        Text("\(Int(thresholdDraft ?? Double(config.lowBatteryThreshold)))%")
+                            .monospacedDigit()
+                            .foregroundStyle(.secondary)
+                            .contentTransition(.numericText())
+                    }
+                    Slider(
+                        value: Binding(
+                            get: { thresholdDraft ?? Double(config.lowBatteryThreshold) },
+                            set: { thresholdDraft = $0.rounded() }
+                        ),
+                        in: Double(LowBatteryAlertTracker.thresholdRange.lowerBound)...Double(LowBatteryAlertTracker.thresholdRange.upperBound),
+                        step: 1,
+                        label: { EmptyView() },
+                        minimumValueLabel: { Image(systemName: "battery.0").foregroundStyle(.secondary) },
+                        maximumValueLabel: { Image(systemName: "battery.50").foregroundStyle(.secondary) },
+                        onEditingChanged: { editing in
+                            // Commit on release so dragging past the current level doesn't fire alerts midway.
+                            guard !editing, let draft = thresholdDraft else { return }
+                            config.lowBatteryThreshold = Int(draft)
+                            thresholdDraft = nil
+                            DeviceManager.shared.checkLowBattery()
+                        }
+                    )
+                    .labelsHidden()
+                }
+                .disabled(!config.lowBatteryAlertEnabled)
+                .onChange(of: config.lowBatteryAlertEnabled) {
+                    DeviceManager.shared.checkLowBattery()
+                }
             }
         }
         .formStyle(.grouped)

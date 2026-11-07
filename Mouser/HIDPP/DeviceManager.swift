@@ -21,6 +21,7 @@ final class DeviceManager {
     private var wheelIndex: UInt8?
 
     private var batteryTimer: Timer?
+    private var lowBatteryTracker = LowBatteryAlertTracker()
     private var divertedCIDs = Set<UInt16>()
     private var attemptedDevices = Set<ObjectIdentifier>()
     private var connecting = false
@@ -282,6 +283,21 @@ final class DeviceManager {
         DeviceState.shared.batteryLevel = Int(level)
         DeviceState.shared.batteryCharging = charging
         BatteryHistory.shared.record(level: Int(level), charging: charging)
+        checkLowBattery()
+    }
+
+    /// Re-evaluates the low-battery alert; also called when the user changes the threshold.
+    func checkLowBattery() {
+        let state = DeviceState.shared
+        let config = ConfigStore.shared
+        guard state.connected, let level = state.batteryLevel, config.lowBatteryAlertEnabled else { return }
+        if let alert = lowBatteryTracker.evaluate(
+            level: level,
+            charging: state.batteryCharging,
+            threshold: config.lowBatteryThreshold
+        ) {
+            Notifier.shared.notifyLowBattery(alert, deviceName: state.deviceName)
+        }
     }
 
     func refreshDPI() async {

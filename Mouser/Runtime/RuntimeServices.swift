@@ -55,7 +55,7 @@ final class LoginItemManager {
     }
 }
 
-/// System notifications for action failures.
+/// System notifications for action failures and low battery.
 @MainActor
 final class Notifier: NSObject, UNUserNotificationCenterDelegate {
     static let shared = Notifier()
@@ -68,7 +68,7 @@ final class Notifier: NSObject, UNUserNotificationCenterDelegate {
     }
 
     func requestAuthorizationIfNeeded() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { [weak self] granted, _ in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { [weak self] granted, _ in
             Task { @MainActor in self?.authorized = granted }
         }
     }
@@ -79,6 +79,24 @@ final class Notifier: NSObject, UNUserNotificationCenterDelegate {
         content.title = "Mouser"
         content.body = message
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request)
+    }
+
+    func notifyLowBattery(_ alert: LowBatteryAlertTracker.Alert, deviceName: String) {
+        guard ConfigStore.shared.lowBatteryAlertEnabled else { return }
+        let device = deviceName.isEmpty ? String(localized: "Mouse") : deviceName
+        let content = UNMutableNotificationContent()
+        switch alert {
+        case .low(let level):
+            content.title = String(localized: "Low Mouse Battery")
+            content.body = String(format: String(localized: "%@ is at %d%%. Charge it soon."), device, level)
+        case .critical(let level):
+            content.title = String(localized: "Mouse Battery Critically Low")
+            content.body = String(format: String(localized: "%@ is at %d%%. Charge it now."), device, level)
+        }
+        content.sound = .default
+        // A fixed identifier replaces the previous low-battery banner instead of stacking.
+        let request = UNNotificationRequest(identifier: "lowBattery", content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request)
     }
 

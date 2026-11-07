@@ -28,6 +28,15 @@ final class ConfigStore {
         didSet { defaults.set(showBatteryInMenuBar, forKey: "showBatteryInMenuBar") }
     }
 
+    var lowBatteryAlertEnabled: Bool {
+        didSet { defaults.set(lowBatteryAlertEnabled, forKey: "lowBatteryAlertEnabled") }
+    }
+
+    /// Battery percentage at or below which a low-battery notification is shown.
+    var lowBatteryThreshold: Int {
+        didSet { defaults.set(lowBatteryThreshold, forKey: "lowBatteryThreshold") }
+    }
+
     var notifyOnActionFailure: Bool {
         didSet { defaults.set(notifyOnActionFailure, forKey: "notifyOnActionFailure") }
     }
@@ -68,6 +77,11 @@ final class ConfigStore {
         preferredRatchetTorque = defaults.object(forKey: "preferredRatchetTorque") as? Int
         showBatteryInMenuBar = defaults.object(forKey: "showBatteryInMenuBar") as? Bool ?? true
         notifyOnActionFailure = defaults.object(forKey: "notifyOnActionFailure") as? Bool ?? true
+        lowBatteryAlertEnabled = defaults.object(forKey: "lowBatteryAlertEnabled") as? Bool ?? true
+        let range = LowBatteryAlertTracker.thresholdRange
+        let storedThreshold = defaults.object(forKey: "lowBatteryThreshold") as? Int
+        lowBatteryThreshold = storedThreshold.map { min(max($0, range.lowerBound), range.upperBound) }
+            ?? LowBatteryAlertTracker.defaultThreshold
     }
 
     func action(for button: MouseButton) -> MouseAction {
