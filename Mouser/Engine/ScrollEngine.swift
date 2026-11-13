@@ -38,6 +38,8 @@ final class ScrollEngine: NSObject, @unchecked Sendable {
     private var template: CGEvent?
     /// App the wheel event was headed to; frames go straight to it.
     private var targetPID: pid_t = 0
+    /// Fractional lines not yet sent as whole-line deltas.
+    private var lineRemainder = (y: 0.0, x: 0.0)
 
     // Trackpad simulation state.
     private var simulateTrackpad = false
@@ -46,6 +48,8 @@ final class ScrollEngine: NSObject, @unchecked Sendable {
     private var inputEnded = true
 
     private static let deadZone = 1.0
+    /// Pixels the system scrolls per wheel line.
+    private static let pixelsPerLine = 10.0
     private static let continuationThreshold: CFTimeInterval = 0.18
     private static let separationThreshold: CFTimeInterval = 0.45
 
@@ -164,6 +168,10 @@ final class ScrollEngine: NSObject, @unchecked Sendable {
         let reverseX = settings.reverse && settings.reverseHorizontal
         if hasY && reverseY { wheel.y.negate() }
         if hasX && reverseX { wheel.x.negate() }
+        // Write the reversal back before the event becomes the frame template:
+        // apps that read line / fixed-point deltas (Terminal.app) would
+        // otherwise still see the original direction.
+        if (hasY && reverseY) || (hasX && reverseX) { wheel.write(to: event) }
 
         let smooth = settings.smooth && !blockHeld
         let smoothY = smooth && hasY && (shifting ? settings.smoothHorizontal : settings.smoothVertical)
@@ -323,6 +331,20 @@ final class ScrollEngine: NSObject, @unchecked Sendable {
         event.setIntegerValueField(.scrollWheelEventIsContinuous, value: 1)
         event.setDoubleValueField(.scrollWheelEventPointDeltaAxis1, value: value.y)
         event.setDoubleValueField(.scrollWheelEventPointDeltaAxis2, value: value.x)
+        // The template still carries the notch's line / fixed-point deltas.
+        // Apps that scroll by those instead of pixels (Terminal.app, and its
+        // alternate screen in vim / less / TUIs) would jump a whole notch on
+        // every frame. Give each frame its own share in lines, like a trackpad.
+        let lines = (y: value.y / Self.pixelsPerLine, x: value.x / Self.pixelsPerLine)
+        event.setDoubleValueField(.scrollWheelEventFixedPtDeltaAxis1, value: lines.y)
+        event.setDoubleValueField(.scrollWheelEventFixedPtDeltaAxis2, value: lines.x)
+        lineRemainder.y += lines.y
+        lineRemainder.x += lines.x
+        let whole = (y: lineRemainder.y.rounded(.towardZero), x: lineRemainder.x.rounded(.towardZero))
+        lineRemainder.y -= whole.y
+        lineRemainder.x -= whole.x
+        event.setIntegerValueField(.scrollWheelEventDeltaAxis1, value: Int64(whole.y))
+        event.setIntegerValueField(.scrollWheelEventDeltaAxis2, value: Int64(whole.x))
         EventMarker.tag(event)
         // Posting a copy into the session stream would also move the cursor
         // back to where the wheel turned, fighting the user's hand on every
@@ -358,6 +380,7 @@ final class ScrollEngine: NSObject, @unchecked Sendable {
         filter = EaseFilter()
         template = nil
         targetPID = 0
+        lineRemainder = (0, 0)
         phase = .idle
         momentumStarted = false
         inputEnded = true
