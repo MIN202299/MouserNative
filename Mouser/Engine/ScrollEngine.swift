@@ -23,6 +23,15 @@ final class ScrollEngine: NSObject, @unchecked Sendable {
     private var runLoopSource: CFRunLoopSource?
     private var displayLink: CADisplayLink?
     private var linkRunning = false
+    /// Last time the link fired (or was started); a running link that stops
+    /// firing — after sleep, or when its display goes away — would otherwise
+    /// swallow every wheel event for good.
+    private var lastTick: CFTimeInterval = 0
+    /// False from a detected stall until the link is rebuilt; wheel events
+    /// pass through unsmoothed meanwhile so scrolling never stops.
+    private var linkHealthy = true
+    private var rebuildPending = false
+    private var observers: [NSObjectProtocol] = []
     private let thread = ScrollThread()
 
     private let settingsLock = NSLock()
@@ -48,6 +57,7 @@ final class ScrollEngine: NSObject, @unchecked Sendable {
     private var inputEnded = true
 
     private static let deadZone = 1.0
+    private static let stallThreshold: CFTimeInterval = 0.25
     /// Pixels the system scrolls per wheel line.
     private static let pixelsPerLine = 10.0
     private static let continuationThreshold: CFTimeInterval = 0.18
@@ -105,21 +115,66 @@ final class ScrollEngine: NSObject, @unchecked Sendable {
         runLoopSource = source
         CFRunLoopAddSource(runLoop.getCFRunLoop(), source, CFRunLoopMode.commonModes)
 
-        // NSScreen is main-thread only, so the link is made here and then
-        // driven by the scroll thread's run loop.
-        if let link = NSScreen.main?.displayLink(target: self, selector: #selector(frame(_:))) {
-            link.isPaused = true
-            link.add(to: runLoop, forMode: .common)
-            displayLink = link
+        rebuildDisplayLink()
+        // A display link is bound to one screen and dies with it; rebuild it
+        // whenever screens change or the Mac wakes.
+        let rebuild: @Sendable (Notification) -> Void = { [weak self] _ in
+            MainActor.assumeIsolated { self?.rebuildDisplayLink() }
         }
+        observers = [
+            NotificationCenter.default.addObserver(
+                forName: NSApplication.didChangeScreenParametersNotification, object: nil, queue: .main, using: rebuild),
+            NSWorkspace.shared.notificationCenter.addObserver(
+                forName: NSWorkspace.didWakeNotification, object: nil, queue: .main, using: rebuild),
+            NSWorkspace.shared.notificationCenter.addObserver(
+                forName: NSWorkspace.screensDidWakeNotification, object: nil, queue: .main, using: rebuild),
+        ]
         CGEvent.tapEnable(tap: tap, enable: true)
         print("[Mouser] Scroll tap active")
+    }
+
+    /// Makes a fresh display link for the current main screen (NSScreen is
+    /// main-thread only) and swaps it in on the scroll thread.
+    @MainActor
+    private func rebuildDisplayLink() {
+        guard eventTap != nil else { return }
+        let link = (NSScreen.main ?? NSScreen.screens.first)?
+            .displayLink(target: self, selector: #selector(frame(_:)))
+        link?.isPaused = true
+        let runLoop = thread.runLoop
+        CFRunLoopPerformBlock(runLoop.getCFRunLoop(), CFRunLoopMode.commonModes.rawValue) { [self] in
+            reset()
+            displayLink?.invalidate()
+            displayLink = link
+            link?.add(to: runLoop, forMode: .common)
+            rebuildPending = false
+            // If this link is dead too, the stall check catches it again.
+            linkHealthy = link != nil
+        }
+        CFRunLoopWakeUp(runLoop.getCFRunLoop())
+    }
+
+    /// Called on the scroll thread when the link stopped firing.
+    private func handleStall() {
+        print("[Mouser] Scroll display link stalled; rebuilding")
+        reset()
+        linkHealthy = false
+        guard !rebuildPending else { return }
+        rebuildPending = true
+        DispatchQueue.main.async { [self] in
+            MainActor.assumeIsolated { rebuildDisplayLink() }
+        }
     }
 
     /// Call on the main thread.
     @MainActor
     func stop() {
         guard let tap = eventTap else { return }
+        observers.forEach {
+            NotificationCenter.default.removeObserver($0)
+            NSWorkspace.shared.notificationCenter.removeObserver($0)
+        }
+        observers = []
         CGEvent.tapEnable(tap: tap, enable: false)
         let runLoop = thread.runLoop.getCFRunLoop()
         if let source = runLoopSource {
@@ -173,7 +228,12 @@ final class ScrollEngine: NSObject, @unchecked Sendable {
         // otherwise still see the original direction.
         if (hasY && reverseY) || (hasX && reverseX) { wheel.write(to: event) }
 
-        let smooth = settings.smooth && !blockHeld
+        if linkRunning, CACurrentMediaTime() - lastTick > Self.stallThreshold {
+            handleStall()
+        }
+        // Without a working frame clock, deliver the (possibly reversed) event
+        // as is rather than swallowing it.
+        let smooth = settings.smooth && !blockHeld && linkHealthy && displayLink != nil
         let smoothY = smooth && hasY && (shifting ? settings.smoothHorizontal : settings.smoothVertical)
         let smoothX = smooth && hasX && settings.smoothHorizontal
 
@@ -261,11 +321,14 @@ final class ScrollEngine: NSObject, @unchecked Sendable {
     private func startDisplayLink() {
         guard !linkRunning else { return }
         linkRunning = true
+        lastTick = CACurrentMediaTime()
         displayLink?.isPaused = false
     }
 
     @objc private func frame(_ link: CADisplayLink) {
+        guard link === displayLink else { return }
         let now = CACurrentMediaTime()
+        lastTick = now
         let step = (
             y: (buffer.y - current.y) * transition,
             x: (buffer.x - current.x) * transition
